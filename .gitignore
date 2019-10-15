@@ -1,0 +1,17 @@
+# IDE folders
+.idea/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+# Django local settings files :
+*.log
+local_settings.py
+db.sqlite3
