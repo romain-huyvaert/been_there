@@ -11,7 +11,7 @@ git clone https://github.com/romain-huyvaert/been_there.git
 
 Once it is cloned go inside the folder and apply migrations :
 ```
-cd been_there
+cd been_there/
 python manage.py migrate
 ```
 
