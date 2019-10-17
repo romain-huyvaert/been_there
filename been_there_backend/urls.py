@@ -4,7 +4,9 @@ from been_there_backend.restapi import views
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
+router.register(r'pinpoints', views.PinpointViewSet)
+router.register(r'reviews', views.ReviewViewSet)
+router.register(r'worldmap', views.WorldMapViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

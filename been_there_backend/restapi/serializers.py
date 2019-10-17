@@ -1,14 +1,26 @@
-from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from .models import User, Pinpoint, Review, WorldMap
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'groups']
+        fields = ['username', 'email', 'name']
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class PinpointSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Group
-        fields = ['url', 'name']
+        model = Pinpoint
+        fields = ['category', 'x', 'y', 'address', 'title', 'owner_id']
+
+
+class ReviewSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['rating', 'text', 'date', 'time', 'pinpoint_id']
+
+
+class WorldMapSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = WorldMap
+        fields = ['x', 'y']
