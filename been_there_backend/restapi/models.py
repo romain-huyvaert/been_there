@@ -10,7 +10,7 @@ class User(models.Model):
     username = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=100)
-    #friends = models.ForeignKey(User, on_delete=models.CASCADE)
+    friends = models.ForeignKey('self', on_delete=models.CASCADE)
 
 
 """
@@ -43,6 +43,6 @@ Class WorldMap
 class WorldMap(models.Model):
     x       = models.FloatField()
     y       = models.FloatField()
-    #TODO filter
-    #TODO cities, list of CHAR
-    #TODO countries, list of CHAR
+    filter  = models.ForeignKey(User, on_delete=models.CASCADE)
+    cities  = models.CharField(max_length=30)
+    country = models.CharField(max_length=55)

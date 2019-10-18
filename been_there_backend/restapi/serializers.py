@@ -3,16 +3,13 @@ from .models import User, Pinpoint, Review, WorldMap
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    # friends = serializers.HyperlinkedModelSerializer(
-    #     many=True
-    # )
-    #
-    # class Meta:
-    #     model = User
-    #     fields = ['username', 'email', 'name', 'friends']
+    friends = serializers.HyperlinkedModelSerializer(
+        many=True
+    )
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'name']
+        fields = ['username', 'email', 'name', 'friends']
 
 
 class PinpointSerializer(serializers.HyperlinkedModelSerializer):
@@ -28,6 +25,18 @@ class ReviewSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class WorldMapSerializer(serializers.HyperlinkedModelSerializer):
+    filter = serializers.HyperlinkedModelSerializer(
+        many=True
+    )
+
+    cities = serializers.HyperlinkedModelSerializer(
+        many=True
+    )
+
+    countries = serializers.HyperlinkedModelSerializer(
+        many=True
+    )
+    
     class Meta:
         model = WorldMap
-        fields = ['x', 'y']
+        fields = ['x', 'y', 'filter', 'cities', 'countries']
