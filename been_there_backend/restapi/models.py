@@ -1,5 +1,6 @@
 from django.db import models
 
+
 """
 Class User
 Custom user model that takes differents fields in consideration
@@ -9,7 +10,7 @@ class User(models.Model):
     username = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=100)
-    #TODO friends, list of user ids
+    #friends = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 """
@@ -23,7 +24,7 @@ class Pinpoint(models.Model):
     title       = models.CharField(max_length=50)
     owner_id    = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    
+
 """
 Class Review
 """
