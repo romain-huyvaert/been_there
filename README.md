@@ -24,3 +24,17 @@ Finally you can access the backend using your browser and going to this URL :
 
 http://127.0.0.1:8000/
 
+##Models modifications (file models.py)
+
+After making a modification inside the models.py file, before running the application use those commands :
+
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+Once the migrations are made you can launch the backend server 
+
+```
+python manage.py runserver
+```

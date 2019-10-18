@@ -12,7 +12,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     #     fields = ['username', 'email', 'name', 'friends']
     class Meta:
         model = User
-        fields = ['username', 'email', 'name', 'friends']
+        fields = ['username', 'email', 'name']
 
 
 class PinpointSerializer(serializers.HyperlinkedModelSerializer):
