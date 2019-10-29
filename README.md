@@ -24,3 +24,23 @@ Finally you can access the backend using your browser and going to this URL :
 
 http://127.0.0.1:8000/
 
+
+## Installation frontend
+From the root of the project, go to the frontend folder
+```
+cd been_there_frontend/beenthere-app
+```
+
+Open a console window and install all the dependencies with the following commmand
+```
+npm install
+```
+
+When that is done, start the application
+```
+npm start
+```
+
+Open your browser and go to the following address:
+http://127.0.0.1:3000/
+

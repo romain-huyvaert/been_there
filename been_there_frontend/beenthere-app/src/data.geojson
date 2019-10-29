@@ -1,0 +1,147 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": [{
+        "name": "Eiffel tower",
+        "review": "Great place to visit. Just the French people suck really bad.",
+		"reviewer": "254862"
+      }],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.1589423418045044,
+          51.497202145853784
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": [{
+              "name": "test123",
+              "review": "abc",
+			  "reviewer": "489962"
+            }],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.15822887420654297,
+          51.49493113833391
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": [{
+              "name": "test123",
+              "review": "abc"
+            }],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.1631641387939453,
+          51.49570596538067
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": [{
+              "name": "test123",
+              "review": "abc"
+            }],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.1556539535522461,
+          51.49629375642361
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": [{
+              "name": "test123",
+              "review": "abc"
+            }],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.14299392700195312,
+          51.489720752362466
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": [{
+              "name": "test123",
+              "review": "abc"
+            }],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.17526626586914062,
+          51.48907943293123
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": [{
+              "name": "test123",
+              "review": "abc"
+            }],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.182647705078125,
+          51.501369818211096
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": [{
+              "name": "test123",
+              "review": "abc"
+            }],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.14024734497070312,
+          51.51237491545877
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": [{
+              "name": "test123",
+              "review": "abc"
+            }],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.13355255126953125,
+          51.4965609316647
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": [{
+              "name": "test123",
+              "review": "abc"
+            }],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.14848709106445312,
+          51.50767403407925
+        ]
+      }
+    }
+  ]
+}
