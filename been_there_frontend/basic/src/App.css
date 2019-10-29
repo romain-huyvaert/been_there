@@ -1,0 +1,54 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #09d3ac;
+}
+
+#header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+#popupDiv{
+    /*width:500px;*/
+    display: none;
+    position: absolute;
+    background-color: azure;
+    /*width: 100%;*/
+    left: 30%;
+    right: 30%;
+    height: 150px;
+    bottom: 0;
+    margin: auto;
+    border: 3px solid #73AD21;
+    z-index: 2;
+}
+
+.mapdiv {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+}
