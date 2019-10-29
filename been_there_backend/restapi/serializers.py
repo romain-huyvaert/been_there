@@ -36,7 +36,7 @@ class WorldMapSerializer(serializers.HyperlinkedModelSerializer):
     countries = serializers.HyperlinkedModelSerializer(
         many=True
     )
-    
+
     class Meta:
         model = WorldMap
         fields = ['x', 'y', 'filter', 'cities', 'countries']
