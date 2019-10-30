@@ -5,6 +5,7 @@ import Data from './data.geojson';
 import './App.css';
 
 
+
 var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
 
@@ -42,50 +43,107 @@ export default class Mapbox extends React.Component {
         });
 
         map.on('load', () => {
-            map.addLayer({
-                id: 'sharedRooms',
-                type: 'circle',
-                source: {
-                    type: 'geojson',
-                    data: Data
-                },
-                paint: {
-                    'circle-color': '#446ccf'
-                },
 
+            map.loadImage("https://img.pngio.com/pin-point-map-yapisstickenco-google-map-pinpoint-png-225_340.png", function(error, image) {
+                if (error) throw error;
+                map.addImage('pointer', image);
+                map.addLayer({
+                    id: 'beenThereLocations',
+                    type: 'symbol',
+                    source: {
+                        type: 'geojson',
+                        data: Data,
+                        cluster: true,
+                        clusterRadius: 10
+                    },
+                    // paint: {
+                    //     'circle-color': '#6b44cc',
+                    //     'circle-radius': 10,
+                    //     'circle-stroke-width': 1,
+                    //     'circle-stroke-color': '#ffcf4b'
+                    // },
+                    "layout": {
+                        "icon-image": "pointer",
+                        "icon-size": 0.09
+                    }
+
+
+                });
             });
+
         });
 
-        map.on('click', 'sharedRooms', (e) => {
+        map.on('click', () => {
+            let popup = document.getElementById("popupDiv")
+            popup.style.display = "none";
+        });
+
+        map.on('click', 'beenThereLocations', function (e) {
+            map.flyTo({center: e.features[0].geometry.coordinates});
+
+        });
+
+        map.on('click', 'beenThereLocations', (e) => {
+
             let coordinates = e.features[0].geometry.coordinates.slice();
             let name = e.features[0].properties.name;
             let review = e.features[0].properties.review;
+            let name2 = e.features[0].properties.name2;
+            let review2 = e.features[0].properties.review2;
 
             let popup = document.getElementById("popupDiv")
+            console.log(e.features[0].geometry.coordinates)
+            // new mapboxgl.Popup().setLngLat(coordinates).setHTML(name + "<hr />" + review).addTo(map);
 
-            new mapboxgl.Popup().setLngLat(coordinates).setHTML(name + "<hr />" + review).addTo(map);
+            // if(map.getLayer('clickedLocation')){
+            //     map.removeLayer('clickedLocation');
+            // }
+            //
+            // else{
+            //     alert(e.features[0].geometry.coordinates);
+            //     map.addLayer({
+            //         id: 'clickedLocation',
+            //         type: 'circle',
+            //         source: {
+            //             type: 'point',
+            //             data: e.features[0].geometry.coordinates,
+            //         },
+            //         paint: {
+            //             'circle-color': '#cc000b',
+            //             'circle-radius': 19,
+            //             'circle-stroke-width': 1,
+            //             'circle-stroke-color': '#ffcf4b'
+            //         },
+            //     });
+            // }
+
             popup.style.display = "block";
-            popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review;
+
+            if (name2 != undefined && review2 != undefined) {
+                popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br /><hr />" + "Name: " + name2 + "<br />" + "Review: " + review2;
+            }
+            else{
+                popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br />";
+            }
 
         });
 
 // Change the cursor to a pointer when the mouse is over the places layer.
-        map.on('mouseenter', 'sharedRooms', () => {
+        map.on('mouseenter', 'beenThereLocations', () => {
             map.getCanvas().style.cursor = 'pointer';
         });
 
 // Change it back to a pointer when it leaves.
-        map.on('mouseleave', 'sharedRooms', () => {
+        map.on('mouseleave', 'beenThereLocations', () => {
             map.getCanvas().style.cursor = '';
         });
+        var a = new mapboxgl.Marker();
 
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
         });
 
-
-
-        // map.addControl(geocoder);
+        map.addControl(geocoder, 'top-left');
     }
 
     render() {

@@ -5,7 +5,7 @@ export class Header extends Component {
         return (
             <div id="header">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <a className="navbar-brand" href="#">Navbar w/ text</a>
+                <a className="navbar-brand" href="#">Been there</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
                         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -13,18 +13,18 @@ export class Header extends Component {
                 <div className="collapse navbar-collapse" id="navbarText">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                            <a className="nav-link" href="#">Account <span className="sr-only">(current)</span></a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Features</a>
+                            <a className="nav-link" href="#">Settings</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Pricing</a>
+                            <a className="nav-link" href="#">Log out</a>
                         </li>
                     </ul>
-                    <span className="navbar-text">
-                      Navbar text with an inline elements
-                    </span>
+                    {/*<span className="navbar-text">*/}
+                    {/*  Navbar text with an inline elements*/}
+                    {/*</span>*/}
                 </div>
             </nav>
             </div>
