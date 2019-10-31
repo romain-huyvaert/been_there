@@ -141,6 +141,14 @@ export default class Mapbox extends React.Component {
 
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
+            marker: true,
+            types: 'poi',
+            render: function(item) {
+                var maki = item.properties.maki || 'marker';
+                return "<div class='geocoder-dropdown-item'><img class='geocoder-dropdown-icon' src='https://unpkg.com/@mapbox/maki@6.1.0/icons/" + maki + "-15.svg'><span class='geocoder-dropdown-text'>" + item.text + "</span></div>";
+            },
+            mapboxgl: mapboxgl
+
         });
 
         map.addControl(geocoder, 'top-left');
