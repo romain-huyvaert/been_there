@@ -4,10 +4,7 @@ import mapboxgl from 'mapbox-gl'
 import Data from './data.geojson';
 import './App.css';
 
-
-
 var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
-
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleHBvc3QiLCJhIjoiY2p2MmdmcHV2MHl0YTQ5cWN6bWR6Zm5jaiJ9.glKqi6Jo4dp4esW7k_CBFA';
 
@@ -66,11 +63,8 @@ export default class Mapbox extends React.Component {
                         "icon-image": "pointer",
                         "icon-size": 0.09
                     }
-
-
                 });
             });
-
         });
 
         map.on('click', () => {
@@ -137,12 +131,10 @@ export default class Mapbox extends React.Component {
         map.on('mouseleave', 'beenThereLocations', () => {
             map.getCanvas().style.cursor = '';
         });
-        var a = new mapboxgl.Marker();
 
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             marker: true,
-            types: 'poi',
             render: function(item) {
                 var maki = item.properties.maki || 'marker';
                 return "<div class='geocoder-dropdown-item'><img class='geocoder-dropdown-icon' src='https://unpkg.com/@mapbox/maki@6.1.0/icons/" + maki + "-15.svg'><span class='geocoder-dropdown-text'>" + item.text + "</span></div>";
@@ -167,5 +159,3 @@ export default class Mapbox extends React.Component {
         );
     }
 }
-
-// ReactDOM.render(<Application />, document.getElementById('app'));
