@@ -1,6 +1,6 @@
 {
-  "short_name": "Been there 2",
-  "name": "Been there 2",
+  "short_name": "Been there",
+  "name": "Been there",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "192x192_versie_4.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "512x512_versie_1.png",
       "type": "image/png",
       "sizes": "512x512"
     }

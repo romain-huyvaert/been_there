@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import Data from './data.geojson';
 import './App.css';
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
+
 
 var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
+var MapboxDraw = require('@mapbox/mapbox-gl-draw');
+
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleHBvc3QiLCJhIjoiY2p2MmdmcHV2MHl0YTQ5cWN6bWR6Zm5jaiJ9.glKqi6Jo4dp4esW7k_CBFA';
 
@@ -113,7 +117,7 @@ export default class Mapbox extends React.Component {
 
             popup.style.display = "block";
 
-            if (name2 != undefined && review2 != undefined) {
+            if (name2 !== undefined && review2 !== undefined) {
                 popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br /><hr />" + "Name: " + name2 + "<br />" + "Review: " + review2;
             }
             else{
@@ -121,6 +125,28 @@ export default class Mapbox extends React.Component {
             }
 
         });
+
+        // map.on('click', function(e) {
+        //
+        //         map.addLayer({
+        //             id: 'beenThereLocations2',
+        //             type: 'circle',
+        //             source: {
+        //                 type: 'geojson',
+        //                 data: JSON.stringify(e.lngLat),
+        //             },
+        //             paint: {
+        //                 'circle-color': '#6b44cc',
+        //                 'circle-radius': 10,
+        //                 'circle-stroke-width': 1,
+        //                 'circle-stroke-color': '#ffcf4b'
+        //             },
+        //
+        //     });
+        // });
+
+        // var nav = new mapboxgl.NavigationControl();
+        // map.addControl(nav, 'top-left');
 
 // Change the cursor to a pointer when the mouse is over the places layer.
         map.on('mouseenter', 'beenThereLocations', () => {
@@ -144,6 +170,20 @@ export default class Mapbox extends React.Component {
         });
 
         map.addControl(geocoder, 'top-left');
+
+        var geoControl = new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true
+        });
+
+
+        map.addControl(geoControl, 'bottom-left');
+
+        // https://github.com/mapbox/mapbox-gl-draw#usage-in-your-application
+        // var Draw = new MapboxDraw();
+        // map.addControl(Draw, 'top-right');
     }
 
     render() {

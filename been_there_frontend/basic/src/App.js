@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Mapbox from './Mapbox'
 import Header from "./Header";
 
