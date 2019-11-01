@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import Data from './data.geojson';
 import './App.css';
+import myImage from './192x192_versie_1.png';
+
+
 // import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 
 // "homepage": "https://alexpost95.github.io/C-CTest/",
@@ -47,7 +50,7 @@ export default class Mapbox extends React.Component {
 
         map.on('load', () => {
 
-            map.loadImage("https://img.pngio.com/pin-point-map-yapisstickenco-google-map-pinpoint-png-225_340.png", function(error, image) {
+            map.loadImage(myImage, function(error, image) {
                 if (error) throw error;
                 map.addImage('pointer', image);
                 map.addLayer({
@@ -67,7 +70,7 @@ export default class Mapbox extends React.Component {
                     // },
                     "layout": {
                         "icon-image": "pointer",
-                        "icon-size": 0.09
+                        "icon-size": 0.3
                     }
                 });
             });
@@ -88,8 +91,8 @@ export default class Mapbox extends React.Component {
             let coordinates = e.features[0].geometry.coordinates.slice();
             let name = e.features[0].properties.name;
             let review = e.features[0].properties.review;
-            let name2 = e.features[0].properties.name2;
-            let review2 = e.features[0].properties.review2;
+            let reviewerName = e.features[0].properties.reviewerName;
+            let rating = e.features[0].properties.rating;
 
             let popup = document.getElementById("popupDiv")
             console.log(e.features[0].geometry.coordinates)
@@ -119,12 +122,14 @@ export default class Mapbox extends React.Component {
 
             popup.style.display = "block";
 
-            if (name2 !== undefined && review2 !== undefined) {
-                popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br /><hr />" + "Name: " + name2 + "<br />" + "Review: " + review2;
-            }
-            else{
-                popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br />";
-            }
+            // if (name2 !== undefined && review2 !== undefined) {
+            //     popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br /><hr />" + "Name: " + name2 + "<br />" + "Review: " + review2;
+            // }
+            // else{
+            //     popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br />";
+            // }
+
+            popup.innerHTML = "Review by: " + reviewerName + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars";
 
         });
 
@@ -167,7 +172,8 @@ export default class Mapbox extends React.Component {
                 var maki = item.properties.maki || 'marker';
                 return "<div class='geocoder-dropdown-item'><img class='geocoder-dropdown-icon' src='https://unpkg.com/@mapbox/maki@6.1.0/icons/" + maki + "-15.svg'><span class='geocoder-dropdown-text'>" + item.text + "</span></div>";
             },
-            mapboxgl: mapboxgl
+            mapboxgl: mapboxgl,
+            language: 'En-en'
 
         });
 
@@ -181,7 +187,7 @@ export default class Mapbox extends React.Component {
         });
 
 
-        map.addControl(geoControl, 'bottom-left');
+        map.addControl(geoControl, 'top-right');
 
         // https://github.com/mapbox/mapbox-gl-draw#usage-in-your-application
         // var Draw = new MapboxDraw();
