@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import Data from './data.geojson';
 import './App.css';
-import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
+// import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
+
+// "homepage": "https://alexpost95.github.io/C-CTest/",
 
 
 var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
-var MapboxDraw = require('@mapbox/mapbox-gl-draw');
+// var MapboxDraw = require('@mapbox/mapbox-gl-draw');
 
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleHBvc3QiLCJhIjoiY2p2MmdmcHV2MHl0YTQ5cWN6bWR6Zm5jaiJ9.glKqi6Jo4dp4esW7k_CBFA';

@@ -2,7 +2,6 @@
   "name": "basic",
   "version": "0.0.0",
   "private": true,
-  "homepage": "https://alexpost95.github.io/C-CTest/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
