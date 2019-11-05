@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import Data from './data.geojson';
+import Data2 from './data2.geojson';
 import './App.css';
 import myImage from './192x192_versie_1.png';
 
@@ -59,9 +60,9 @@ export default class Mapbox extends React.Component {
                     source: {
                         type: 'geojson',
                         data: Data,
-                        cluster: true,
+                        cluster: false,
                         // clusterMaxZoom: 20,
-                        clusterRadius: 1
+                        // clusterRadius: 1
                     },
                     // paint: {
                     //     'circle-color': '#6b44cc',
@@ -87,6 +88,8 @@ export default class Mapbox extends React.Component {
 
         });
 
+
+
         map.on('click', 'beenThereLocations', (e) => {
 
             let coordinates = e.features[0].geometry.coordinates.slice();
@@ -96,7 +99,9 @@ export default class Mapbox extends React.Component {
             let rating = e.features[0].properties.rating;
 
             let popup = document.getElementById("popupDiv")
-            console.log(e.features[0].geometry.coordinates)
+            console.log(e)
+            e.preventDefault();
+
             // new mapboxgl.Popup().setLngLat(coordinates).setHTML(name + "<hr />" + review).addTo(map);
 
             // if(map.getLayer('clickedLocation')){
@@ -123,15 +128,8 @@ export default class Mapbox extends React.Component {
 
             popup.style.display = "block";
 
-            // if (name2 !== undefined && review2 !== undefined) {
-            //     popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br /><hr />" + "Name: " + name2 + "<br />" + "Review: " + review2;
-            // }
-            // else{
-            //     popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br />";
-            // }
-
             if (name !== undefined){
-                popup.innerHTML = "Review by: " + reviewerName + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars";
+                popup.innerHTML = "<h5>Review by: " + reviewerName + "</h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars";
             }
             else{
                 popup.innerHTML = "Cluster clicked";
@@ -139,24 +137,59 @@ export default class Mapbox extends React.Component {
 
         });
 
-        // map.on('click', function(e) {
-        //
-        //         map.addLayer({
-        //             id: 'beenThereLocations2',
-        //             type: 'circle',
-        //             source: {
-        //                 type: 'geojson',
-        //                 data: JSON.stringify(e.lngLat),
-        //             },
-        //             paint: {
-        //                 'circle-color': '#6b44cc',
-        //                 'circle-radius': 10,
-        //                 'circle-stroke-width': 1,
-        //                 'circle-stroke-color': '#ffcf4b'
-        //             },
-        //
-        //     });
-        // });
+        map.on('click', function(e) {
+            console.log(e);
+            var newLocation = {};
+            newLocation.type = "FeatureCollection";
+
+            var features = []
+            newLocation.features = features;
+            var newFeature = {};
+            features.push(newFeature);
+            newFeature.type = "Feature";
+            var properties = {};
+            properties.name = "Testlocation";
+            newFeature.properties = properties;
+
+            var geometry = {};
+            newFeature.geometry = geometry;
+            geometry.type = "Point";
+            var coordinates = [];
+            // coordinates.push(e.lngLat.lng);
+            // coordinates.push(e.lngLat.lat);
+            coordinates.push(-0.0638580322265625);
+            coordinates.push(51.50404120260676);
+            geometry.coordinates = coordinates;
+            var abc = JSON.stringify(newLocation);
+
+            // map.addLayer({
+            //     id: 'beenThereLocations2',
+            //     type: 'circle',
+            //     source: {
+            //         type: 'geojson',
+            //         // data: abc,
+            //         data: geojson
+            //     },
+            //     paint: {
+            //         'circle-color': '#6b44cc',
+            //         'circle-radius': 10,
+            //         'circle-stroke-width': 1,
+            //         'circle-stroke-color': '#ffcf4b'
+            //     },
+            // });
+
+            // alert(JSON.stringify(e.lngLat));
+            // console.log(abc);
+
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<input type=\"text\" name=\"Name\" value=\"Name\"><br>\n" +
+                    "<input type=\"text\" name=\"Review\" value=\"Review\"><br>" +
+                    "<input type=\"number\" name=\"Rating\" value=\"Rating\"><br>\n" +
+                "Lng: " + e.lngLat.lng + "<br />" + "Lat: " + e.lngLat.lat)
+                .addTo(map)
+
+        });
 
         // var nav = new mapboxgl.NavigationControl();
         // map.addControl(nav, 'top-left');

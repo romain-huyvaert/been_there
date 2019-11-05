@@ -1,0 +1,243 @@
+{
+   "type":"FeatureCollection",
+   "features":[
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"London Eye",
+            "rating":"4",
+            "review":"Great way to get an overview of London and the Themes. Costs about 10 pounds but totally worth it.",
+            "reviewer":"254862",
+            "reviewerName":"Alex"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               -0.1589423418045044,
+               51.497202145853784
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Tower Bridge",
+            "rating":"5",
+            "review":"Beautiful old bridge, a real London landmark. Can't be missed when you visit London.",
+            "reviewer":"254862",
+            "reviewerName":"Rob"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               -0.15822887420654297,
+               51.49493113833391
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Big Ben",
+            "rating":"1",
+            "review":"A big tower, that's about it. Nice to look at for 5 seconds if you are too lazy to look up the time yourself.",
+            "reviewer":"254862",
+            "reviewerName":"Samantha"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               -0.1631641387939453,
+               51.49570596538067
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Harrods",
+            "rating":"5",
+            "review":"Awesome store. Bought a private plane and a pet tiger. ",
+            "reviewer":"254862",
+            "reviewerName":"Daan"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               -0.1556539535522461,
+               51.49629375642361
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Royal Albert Hall",
+            "rating":"5",
+            "review":"Beautiful venue. Went to a rock concert and it was amazing. Great accoustics.",
+            "reviewer":"254862",
+            "reviewerName":"Jason"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               -0.14299392700195312,
+               51.489720752362466
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Tottenham stadium",
+            "rating":"4",
+            "review":"Went to the Bears NFL game at the Tottenham stadium. It's a great venue for NFL games. ",
+            "reviewer":"254862",
+            "reviewerName":"Daniel"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               -0.17526626586914062,
+               51.48907943293123
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Harry Potter tour",
+            "rating":"1",
+            "review":"Not a recommendation. Didn't even see Harry or Hagrid. Total waste of time and money",
+            "reviewer":"254862",
+            "reviewerName":"Ron"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               -0.182647705078125,
+               51.501369818211096
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"City bus",
+            "rating":"5",
+            "review":"City busses are a great way to get a quick overview of the city and get to your destination quickly while sightseeing. Only cost 2 pounds, totally worth it.",
+            "reviewer":"254862",
+            "reviewerName":"Hayley"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               -0.14024734497070312,
+               51.51237491545877
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"New year's eve fireworks",
+            "rating":"5",
+            "review":"Beautiful fireworks show on new year's eve. Great music, although it was really crowded. Perfect to visit London around the holidays",
+            "reviewer":"254862",
+            "reviewerName":"Taylor"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               -0.13355255126953125,
+               51.4965609316647
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Grote Michaëlskerk",
+            "rating":"3",
+            "review":"Erg mooie kerk en ligt in het centrum van Zwolle. Ik ben hier op zondag ochtend geweest en toen was er een hele mooie dienst. Zeker een aanrader om een keer langs te gaan, vooral op zondag natuurlijk",
+            "reviewer":"254862",
+            "reviewerName":"Henk"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.092187166213989,
+               52.51186261268274
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Park",
+            "rating":"1",
+            "review":"Het is een groot park maar daar is ook alles mee gezegd. Er ligt veel afval en er liggen overal hondendrollen, dus picknicken zou ik hier zeker niet doen",
+            "reviewer":"254862",
+            "reviewerName":"Kees"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.088442802429199,
+               52.50932581351016
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Restaurant vliegend paard",
+            "rating":"5",
+            "review":"Erg leuke en gezellige studenten cafe. Veel soorten bieren en je kan hier heel goedkoop eten. ",
+            "reviewer":"254862",
+            "reviewerName":"Jasper"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.090824604034424,
+               52.512443737824114
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Wezenlanden park",
+            "rating":"4",
+            "review":"Erg groot en mooi park. Hier zijn altijd mensen aan het sporten en aan het genieten van het mooie weer. Als je even wilt ontspannen kan je hier goed terecht. ",
+            "reviewer":"254862",
+            "reviewerName":"Marloes"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.108623743057251,
+               52.50776513586277
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Hotel Van Der Valk",
+            "rating":"3",
+            "review":"Very nice hotel to stay the night. It is very new and therefore it looks great and feels very clean. I recommend it if you need to stay near Zwolle.",
+            "reviewer":"254862",
+            "reviewerName":"John"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.158416271209717,
+               52.53300343801513
+            ]
+         }
+      }
+   ]
+}
