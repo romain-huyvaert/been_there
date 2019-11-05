@@ -25,12 +25,14 @@ export default class Mapbox extends React.Component {
         this.state = {
             lng: 2.6,
             lat: 51.4985,
-            zoom: 6
+            zoom: 6,
+            pointClicked: false
         };
     }
 
     componentDidMount() {
         const { lng, lat, zoom } = this.state;
+        var component = this;
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
@@ -81,16 +83,13 @@ export default class Mapbox extends React.Component {
         map.on('click', () => {
             let popup = document.getElementById("popupDiv")
             popup.style.display = "none";
-        });
-
-        map.on('click', 'beenThereLocations', function (e) {
-            map.flyTo({center: e.features[0].geometry.coordinates});
+            component.setState({pointClicked: false});
 
         });
-
-
 
         map.on('click', 'beenThereLocations', (e) => {
+            component.setState({pointClicked: true});
+            map.flyTo({center: e.features[0].geometry.coordinates});
 
             let coordinates = e.features[0].geometry.coordinates.slice();
             let name = e.features[0].properties.name;
@@ -138,6 +137,16 @@ export default class Mapbox extends React.Component {
         });
 
         map.on('click', function(e) {
+            if (!component.state.pointClicked){
+                new mapboxgl.Popup()
+                    .setLngLat(e.lngLat)
+                    .setHTML("<input type=\"text\" name=\"Name\" value=\"Name\"><br>\n" +
+                        "<input type=\"text\" name=\"Review\" value=\"Review\"><br>" +
+                        "<input type=\"number\" name=\"Rating\" value=\"Rating\"><br>\n" +
+                        "Lng: " + e.lngLat.lng + "<br />" + "Lat: " + e.lngLat.lat)
+                    .addTo(map)
+            }
+
             console.log(e);
             var newLocation = {};
             newLocation.type = "FeatureCollection";
@@ -180,15 +189,6 @@ export default class Mapbox extends React.Component {
 
             // alert(JSON.stringify(e.lngLat));
             // console.log(abc);
-
-            new mapboxgl.Popup()
-                .setLngLat(e.lngLat)
-                .setHTML("<input type=\"text\" name=\"Name\" value=\"Name\"><br>\n" +
-                    "<input type=\"text\" name=\"Review\" value=\"Review\"><br>" +
-                    "<input type=\"number\" name=\"Rating\" value=\"Rating\"><br>\n" +
-                "Lng: " + e.lngLat.lng + "<br />" + "Lat: " + e.lngLat.lat)
-                .addTo(map)
-
         });
 
         // var nav = new mapboxgl.NavigationControl();
