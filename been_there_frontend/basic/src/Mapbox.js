@@ -22,9 +22,9 @@ export default class Mapbox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lng: -0.1541,
+            lng: 2.6,
             lat: 51.4985,
-            zoom: 13
+            zoom: 6
         };
     }
 
@@ -33,7 +33,7 @@ export default class Mapbox extends React.Component {
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: 'mapbox://styles/mapbox/streets-v9',
+            style: 'mapbox://styles/mapbox/streets-v10',
             center: [lng, lat],
             zoom
         });
@@ -60,7 +60,8 @@ export default class Mapbox extends React.Component {
                         type: 'geojson',
                         data: Data,
                         cluster: true,
-                        clusterRadius: 10
+                        // clusterMaxZoom: 20,
+                        clusterRadius: 1
                     },
                     // paint: {
                     //     'circle-color': '#6b44cc',
@@ -129,7 +130,12 @@ export default class Mapbox extends React.Component {
             //     popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br />";
             // }
 
-            popup.innerHTML = "Review by: " + reviewerName + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars";
+            if (name !== undefined){
+                popup.innerHTML = "Review by: " + reviewerName + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars";
+            }
+            else{
+                popup.innerHTML = "Cluster clicked";
+            }
 
         });
 

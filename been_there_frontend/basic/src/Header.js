@@ -13,7 +13,10 @@ export class Header extends Component {
                 <div className="collapse navbar-collapse" id="navbarText">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Account <span className="sr-only">(current)</span></a>
+                            <a className="nav-link" href="https://alhooimeijer.wixsite.com/beenthere" target="_blank">About been there</a>
+                        </li>
+                        <li className="nav-item active">
+                            <a className="nav-link" href="#">Account</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#">Settings</a>
