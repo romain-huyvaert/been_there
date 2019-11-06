@@ -127,8 +127,34 @@ export default class Mapbox extends React.Component {
 
             popup.style.display = "block";
 
+
             if (name !== undefined){
-                popup.innerHTML = "<h5>Review by: " + reviewerName + "</h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars";
+
+                if (rating == 0){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-0\">★★★★★</span> </div>";
+                }
+                else if (rating == 1){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-20\">★★★★★</span> </div>";
+                }
+                else if (rating == 2){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-40\">★★★★★</span> </div>";
+                }
+                else if (rating == 3){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-60\">★★★★★</span> </div>";
+                }
+                else if (rating == 4){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-80\">★★★★★</span> </div>";
+                }
+                else if (rating == 5){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-100\">★★★★★</span> </div>";
+                }
+
             }
             else{
                 popup.innerHTML = "Cluster clicked";
