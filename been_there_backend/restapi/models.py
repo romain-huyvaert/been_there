@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 """
 Class User
@@ -10,19 +10,31 @@ class User(models.Model):
     username = models.CharField(null=False, max_length=50)
     email = models.EmailField(null=False, unique=True)
     name = models.CharField(null=False, max_length=100)
-    friends = models.ForeignKey('self', on_delete=models.CASCADE)
+    friends = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+
+
+# """
+# Class Pinpoint
+# """
+# class Pinpoint(models.Model):
+#     category    = models.CharField(null=False, max_length=50)
+#     x           = models.FloatField(null=False)
+#     y           = models.FloatField(null=False)
+#     address     = models.CharField(null=False, max_length=255)
+#     title       = models.CharField(null=False, max_length=50)
+#     owner_id    = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 """
 Class Pinpoint
 """
 class Pinpoint(models.Model):
-    category    = models.CharField(null=False, max_length=50)
+    name = models.CharField(null=False, max_length=100)
+    rating      = models.IntegerField(null=False, validators=[MaxValueValidator(0), MinValueValidator(5)])
+    review      = models.CharField(null=False, max_length=500)
+    reviewer    = models.ForeignKey(User, on_delete=models.CASCADE)
     x           = models.FloatField(null=False)
     y           = models.FloatField(null=False)
-    address     = models.CharField(null=False, max_length=255)
-    title       = models.CharField(null=False, max_length=50)
-    owner_id    = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 """
@@ -33,7 +45,7 @@ class Review(models.Model):
     text        = models.CharField(max_length=500)
     date        = models.DateField(null=False)
     time        = models.TimeField(null=False)
-    pinpoint_id = models.ForeignKey(Pinpoint, on_delete=models.CASCADE)
+    #pinpoint_id = models.ForeignKey(Pinpoint, on_delete=models.CASCADE)
     #TODO picture storage
 
 
