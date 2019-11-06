@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.gis.db import models as gis_models
 
 """
 Class User
@@ -33,9 +34,9 @@ class Pinpoint(models.Model):
     rating      = models.IntegerField(null=False, validators=[MaxValueValidator(0), MinValueValidator(5)])
     review      = models.CharField(null=False, max_length=500)
     reviewer    = models.ForeignKey(User, on_delete=models.CASCADE)
-    x           = models.FloatField(null=False)
-    y           = models.FloatField(null=False)
-
+    # x           = models.FloatField(null=False)
+    # y           = models.FloatField(null=False)
+    point = gis_models.PointField(null=True, spatial_index=True, geography=True)
 
 """
 Class Review
