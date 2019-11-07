@@ -4,12 +4,27 @@
       {
          "type":"Feature",
          "properties":{
-            "name":"London Eye",
+         "first": {
+            "name":"London Eye 1",
             "rating":"4",
             "review":"Great way to get an overview of London and the Themes. Costs about 10 pounds but totally worth it.",
             "reviewer":"254862",
             "reviewerName":"Alex"
+            },
+         "second": {
+            "name":"London Eye 2",
+            "rating":"3",
+            "review":"It was a bit meh. Totally overrated, although it gives a good overview of the city",
+            "reviewer":"254862",
+            "reviewerName":"Hank"
          },
+         "third": {
+            "name":"London Eye 3",
+            "rating":"1",
+            "review":"Boring. Waited for an hour to get in, was done in 10 minutes. Waste of time",
+            "reviewer":"254862",
+            "reviewerName":"Lewis"
+         }},
          "geometry":{
             "type":"Point",
             "coordinates":[
@@ -21,12 +36,20 @@
       {
          "type":"Feature",
          "properties":{
-            "name":"Tower Bridge",
-            "rating":"5",
-            "review":"Beautiful old bridge, a real London landmark. Can't be missed when you visit London.",
-            "reviewer":"254862",
-            "reviewerName":"Rob"
-         },
+            "first": {
+                "name":"Tower Bridge first",
+                "rating":"3",
+                "review":"Beautiful old bridge, a real London landmark. Can't be missed when you visit London.",
+                "reviewer":"254862",
+                "reviewerName":"Rob"
+            },
+            "second": {
+                "name":"Second Tower Bridge second",
+                "rating":"5",
+                "review":"Beautiful old bridge, a real London landmark. Can't be missed when you visit London.",
+                "reviewer":"254862",
+                "reviewerName":"Rob"
+         }},
          "geometry":{
             "type":"Point",
             "coordinates":[

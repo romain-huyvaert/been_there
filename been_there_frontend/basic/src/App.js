@@ -11,7 +11,7 @@ export default class Application extends React.Component {
             <div>
                 <Header />
                 <Mapbox />
-                <div id="popupDiv">asdfasdf</div>
+                <div id="popupDiv"></div>
             </div>
         );
     }
