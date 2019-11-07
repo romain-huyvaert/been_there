@@ -52,7 +52,7 @@
     padding: 10px 10px 10px 10px;
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: #F8F8FF;
     /*left: 20vw;*/
     /*right: 20vw;*/
     /*width: 98%;*/
@@ -109,6 +109,9 @@
 
 .reviewtekst {
     margin-left: 120px;
+    color: black;
+
+
 }
 
 img {
@@ -129,7 +132,7 @@ img {
     top: 0;
     left: 0;
     content: '★★★★★';
-    color:lightgray;
+    color: darkgrey;
 }
 
 .stars-container:after {
@@ -137,7 +140,7 @@ img {
     top: 0;
     left: 0;
     content: '★★★★★';
-    color: gold;
+    color: #ffcf4b;
     overflow: hidden;
 }
 
@@ -152,9 +155,6 @@ img {
 .stars-80:after { width: 80%; }
 .stars-90:after { width: 90%; }
 .stars-100:after { width: 100%;}
-
-
-
 
 
 
