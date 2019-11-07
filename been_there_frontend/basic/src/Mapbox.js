@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import Data from './data.geojson';
+import Data2 from './data2.geojson';
 import './App.css';
 import myImage from './192x192_versie_1.png';
 
@@ -22,18 +23,20 @@ export default class Mapbox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lng: -0.1541,
+            lng: 2.6,
             lat: 51.4985,
-            zoom: 13
+            zoom: 6,
+            pointClicked: false
         };
     }
 
     componentDidMount() {
         const { lng, lat, zoom } = this.state;
+        var component = this;
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: 'mapbox://styles/mapbox/streets-v9',
+            style: 'mapbox://styles/mapbox/streets-v10',
             center: [lng, lat],
             zoom
         });
@@ -59,8 +62,9 @@ export default class Mapbox extends React.Component {
                     source: {
                         type: 'geojson',
                         data: Data,
-                        cluster: true,
-                        clusterRadius: 10
+                        cluster: false,
+                        // clusterMaxZoom: 20,
+                        // clusterRadius: 1
                     },
                     // paint: {
                     //     'circle-color': '#6b44cc',
@@ -79,14 +83,13 @@ export default class Mapbox extends React.Component {
         map.on('click', () => {
             let popup = document.getElementById("popupDiv")
             popup.style.display = "none";
-        });
-
-        map.on('click', 'beenThereLocations', function (e) {
-            map.flyTo({center: e.features[0].geometry.coordinates});
+            component.setState({pointClicked: false});
 
         });
 
         map.on('click', 'beenThereLocations', (e) => {
+            component.setState({pointClicked: true});
+            map.flyTo({center: e.features[0].geometry.coordinates});
 
             let coordinates = e.features[0].geometry.coordinates.slice();
             let name = e.features[0].properties.name;
@@ -95,7 +98,9 @@ export default class Mapbox extends React.Component {
             let rating = e.features[0].properties.rating;
 
             let popup = document.getElementById("popupDiv")
-            console.log(e.features[0].geometry.coordinates)
+            console.log(e)
+            e.preventDefault();
+
             // new mapboxgl.Popup().setLngLat(coordinates).setHTML(name + "<hr />" + review).addTo(map);
 
             // if(map.getLayer('clickedLocation')){
@@ -122,35 +127,95 @@ export default class Mapbox extends React.Component {
 
             popup.style.display = "block";
 
-            // if (name2 !== undefined && review2 !== undefined) {
-            //     popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br /><hr />" + "Name: " + name2 + "<br />" + "Review: " + review2;
-            // }
-            // else{
-            //     popup.innerHTML = "Name: " + name + "<br />" + "Review: " + review + "<br />";
-            // }
 
-            popup.innerHTML = "Review by: " + reviewerName + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars";
+            if (name !== undefined){
+
+                if (rating == 0){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-0\">★★★★★</span> </div>";
+                }
+                else if (rating == 1){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-20\">★★★★★</span> </div>";
+                }
+                else if (rating == 2){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-40\">★★★★★</span> </div>";
+                }
+                else if (rating == 3){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-60\">★★★★★</span> </div>";
+                }
+                else if (rating == 4){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-80\">★★★★★</span> </div>";
+                }
+                else if (rating == 5){
+                    popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
+                        "<span class=\"stars-container stars-100\">★★★★★</span> </div>";
+                }
+
+            }
+            else{
+                popup.innerHTML = "Cluster clicked";
+            }
 
         });
 
-        // map.on('click', function(e) {
-        //
-        //         map.addLayer({
-        //             id: 'beenThereLocations2',
-        //             type: 'circle',
-        //             source: {
-        //                 type: 'geojson',
-        //                 data: JSON.stringify(e.lngLat),
-        //             },
-        //             paint: {
-        //                 'circle-color': '#6b44cc',
-        //                 'circle-radius': 10,
-        //                 'circle-stroke-width': 1,
-        //                 'circle-stroke-color': '#ffcf4b'
-        //             },
-        //
-        //     });
-        // });
+        map.on('click', function(e) {
+            if (!component.state.pointClicked){
+                new mapboxgl.Popup()
+                    .setLngLat(e.lngLat)
+                    .setHTML("<input type=\"text\" name=\"Name\" value=\"Name\"><br>\n" +
+                        "<input type=\"text\" name=\"Review\" value=\"Review\"><br>" +
+                        "<input type=\"number\" name=\"Rating\" value=\"Rating\"><br>\n" +
+                        "Lng: " + e.lngLat.lng + "<br />" + "Lat: " + e.lngLat.lat)
+                    .addTo(map)
+            }
+
+            console.log(e);
+            var newLocation = {};
+            newLocation.type = "FeatureCollection";
+
+            var features = []
+            newLocation.features = features;
+            var newFeature = {};
+            features.push(newFeature);
+            newFeature.type = "Feature";
+            var properties = {};
+            properties.name = "Testlocation";
+            newFeature.properties = properties;
+
+            var geometry = {};
+            newFeature.geometry = geometry;
+            geometry.type = "Point";
+            var coordinates = [];
+            // coordinates.push(e.lngLat.lng);
+            // coordinates.push(e.lngLat.lat);
+            coordinates.push(-0.0638580322265625);
+            coordinates.push(51.50404120260676);
+            geometry.coordinates = coordinates;
+            var abc = JSON.stringify(newLocation);
+
+            // map.addLayer({
+            //     id: 'beenThereLocations2',
+            //     type: 'circle',
+            //     source: {
+            //         type: 'geojson',
+            //         // data: abc,
+            //         data: geojson
+            //     },
+            //     paint: {
+            //         'circle-color': '#6b44cc',
+            //         'circle-radius': 10,
+            //         'circle-stroke-width': 1,
+            //         'circle-stroke-color': '#ffcf4b'
+            //     },
+            // });
+
+            // alert(JSON.stringify(e.lngLat));
+            // console.log(abc);
+        });
 
         // var nav = new mapboxgl.NavigationControl();
         // map.addControl(nav, 'top-left');
