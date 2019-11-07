@@ -14,29 +14,15 @@ class User(models.Model):
     friends = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
 
 
-# """
-# Class Pinpoint
-# """
-# class Pinpoint(models.Model):
-#     category    = models.CharField(null=False, max_length=50)
-#     x           = models.FloatField(null=False)
-#     y           = models.FloatField(null=False)
-#     address     = models.CharField(null=False, max_length=255)
-#     title       = models.CharField(null=False, max_length=50)
-#     owner_id    = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
 """
 Class Pinpoint
 """
 class Pinpoint(models.Model):
-    name = models.CharField(null=False, max_length=100)
+    name        = models.CharField(null=False, max_length=100)
     rating      = models.IntegerField(null=False, validators=[MaxValueValidator(0), MinValueValidator(5)])
     review      = models.CharField(null=False, max_length=500)
     reviewer    = models.ForeignKey(User, on_delete=models.CASCADE)
-    # x           = models.FloatField(null=False)
-    # y           = models.FloatField(null=False)
-    point = gis_models.PointField(null=True, spatial_index=True, geography=True)
+    point       = gis_models.PointField(null=False, spatial_index=True, geography=True)
 
 """
 Class Review
