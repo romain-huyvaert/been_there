@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import Data from './data.geojson';
-import Data2 from './data2.geojson';
 import './App.css';
 import myImage from './192x192_versie_1.png';
 
@@ -26,13 +25,16 @@ export default class Mapbox extends React.Component {
             lat: 51.4985,
             zoom: 6,
             pointClicked: false,
-            popupOpened: false
+            popupOpened: false,
+            newPointClicked: false,
+            index: 0
         };
     }
 
     componentDidMount() {
         const { lng, lat, zoom } = this.state;
         var component = this;
+        var testIds = [];
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
@@ -133,48 +135,6 @@ export default class Mapbox extends React.Component {
             // closeOnClick: false
         });
 
-
-        map.on('click', function(e) {
-            if (!component.state.pointClicked && !component.state.popupOpened){
-                popup.setLngLat(e.lngLat)
-                    .setHTML("<input type=\"text\" name=\"Name\" value=\"Name\"><br>\n" +
-                        "<input type=\"text\" name=\"Review\" value=\"Review\"><br>" +
-                        "<input type=\"number\" name=\"Rating\" value=\"Rating\"><br>\n" +
-                        "<button id='saveButton' type='button'>Save</button>" + "<button id='closeButton' type='button'>Cancel</button>")
-                    .addTo(map);
-            }
-            if (document.getElementById('closeButton') != null){
-                document.getElementById('closeButton').onclick = function cancelClicked(){popup.remove()};
-                document.getElementById('saveButton').onclick = function saveClicked(){popup.remove()};
-            }
-
-
-            // console.log(e);
-            var newLocation = {};
-            newLocation.type = "FeatureCollection";
-
-            var features = []
-            newLocation.features = features;
-            var newFeature = {};
-            features.push(newFeature);
-            newFeature.type = "Feature";
-            var properties = {};
-            properties.name = "Testlocation";
-            newFeature.properties = properties;
-
-            var geometry = {};
-            newFeature.geometry = geometry;
-            geometry.type = "Point";
-            var coordinates = [];
-            coordinates.push(e.lngLat.lng);
-            coordinates.push(e.lngLat.lat);
-            // coordinates.push(-0.0638580322265625);
-            // coordinates.push(51.50404120260676);
-            geometry.coordinates = coordinates;
-            var abc = JSON.stringify(newLocation);
-
-        });
-
         // var nav = new mapboxgl.NavigationControl();
         // map.addControl(nav, 'top-left');
 
@@ -186,6 +146,110 @@ export default class Mapbox extends React.Component {
 // Change it back to a pointer when it leaves.
         map.on('mouseleave', 'beenThereLocations', () => {
             map.getCanvas().style.cursor = '';
+        });
+
+        map.on('click', function(e) {
+            if (!component.state.pointClicked && !component.state.popupOpened && !component.state.newPointClicked){
+                var coordinates = [];
+                coordinates.push(e.lngLat.lng);
+                coordinates.push(e.lngLat.lat);
+
+                popup.setLngLat(e.lngLat)
+                    .setHTML("<input type=\"text\" id= 'Name' name=\"Name\" value=\"Name\"><br>\n" +
+                        "<input type=\"text\" id= 'Review' name=\"Review\" value=\"Review\"><br>" +
+                        "<input type=\"number\" id= 'Rating' name=\"Rating\" value=\"Rating\"><br>\n" +
+                        "<button id='saveButton' type='button'>Save</button>" + "<button id='closeButton' type='button'>Cancel</button>" +
+                        "<input type=\"hidden\" id= 'lng' name=\"lng\" value=" + e.lngLat.lng + "><br>" +
+                        "<input type=\"hidden\" id= 'lat' name=\"lat\" value=" + e.lngLat.lat + ">"
+                    )
+                    .addTo(map);
+            }
+
+            if (document.getElementById('closeButton') != null){
+                document.getElementById('closeButton').onclick = function cancelClicked(){popup.remove()};
+            }if (document.getElementById('saveButton') != null){
+                document.getElementById('saveButton').onclick = function saveClicked(e){
+                    component.setState({tempReview: document.getElementById('Review').value});
+                    component.setState({tempRating: document.getElementById('Rating').value});
+                    component.setState({tempName: document.getElementById('Name').value});
+                    var name = document.getElementById('Name').value;
+                    var review = document.getElementById('Review').value;
+                    var rating = document.getElementById('Rating').value;
+                    var lng = document.getElementById('lng').value;
+                    var lat = document.getElementById('lat').value;
+                    var coordinates = [];
+                    coordinates.push(lng, lat);
+                    var layerId = "newPoint"+component.state.index++;
+
+                    map.addLayer({
+                        "id": layerId,
+                        "type": "circle",
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                "type": "FeatureCollection",
+                                "features": [{
+                                    "type": "Feature",
+                                    "properties": {
+                                        "name": name,
+                                        "rating": rating,
+                                        "review": review,
+                                        "reviewer": '123456',
+                                        "reviewerName": 'random dude',
+                                        "icon": "rocket"
+                                    },
+                                    "geometry": {
+                                        "type": "Point",
+                                        "coordinates": coordinates
+                                    }
+                                }]
+                            }
+                        },
+                        paint: {
+                            'circle-color': '#cc000b',
+                            'circle-radius': 8,
+                            'circle-stroke-width': 1,
+                            'circle-stroke-color': '#ffcf4b'
+                        },
+                    });
+                    map.on('click', layerId, function(e){
+                        component.setState({newPointClicked: true});
+                        let popup = document.getElementById("popupDiv");
+                        popup.innerHTML = "Review for: " + e.features[0].properties.name + "<br />" + 'Review: ' + e.features[0].properties.review + "<br />" +
+                            "Rating: " + e.features[0].properties.rating;
+                        popup.style.display = "block";
+                        console.log(map.getLayer(e));
+
+                        component.setState({newPointClicked: false});
+                    })
+
+                    popup.remove()};
+                    // component.setState({newPointClicked: false});
+
+            }
+
+            // console.log(e);
+            // var newLocation = {};
+            // newLocation.type = "FeatureCollection";
+            //
+            // var features = []
+            // newLocation.features = features;
+            // var newFeature = {};
+            // features.push(newFeature);
+            // newFeature.type = "Feature";
+            // var properties = {};
+            // properties.name = "Testlocation";
+            // newFeature.properties = properties;
+            //
+            // var geometry = {};
+            // newFeature.geometry = geometry;
+            // geometry.type = "Point";
+            // var coordinates = [];
+            // coordinates.push(e.lngLat.lng);
+            // coordinates.push(e.lngLat.lat);
+            //
+            // geometry.coordinates = coordinates;
+            // var abc = JSON.stringify(newLocation);
         });
 
         var geocoder = new MapboxGeocoder({
