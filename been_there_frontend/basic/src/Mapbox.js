@@ -21,9 +21,9 @@ export default class Mapbox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lng: 2.6,
-            lat: 51.4985,
-            zoom: 6,
+            lng: 5.791168212890625,
+            lat: 52.36302183361385,
+            zoom: 7,
             pointClicked: false,
             popupOpened: false,
             newPointClicked: false,
@@ -98,27 +98,26 @@ export default class Mapbox extends React.Component {
 
             if (name != undefined){
                 component.setState({popupOpened: true});
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + reviewerName + " </h5>" + "<br />" + "Name: " + name + "<br />" + "Review: " + review + "<br />" + "Rating: " + rating + " stars" +
-                    '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> </div>';
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> </div>';
             }
             if (e.features[0].properties.first != undefined && e.features[0].properties.second != undefined && e.features[0].properties.third == undefined){
                 component.setState({popupOpened: true});
                 let firstObject = JSON.parse(e.features[0].properties.first);
                 let secondObject = JSON.parse(e.features[0].properties.second);
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + firstObject.reviewerName + " </h5>" + "<br />" + "Name: " + firstObject.name + "<br />" + "Review: " + firstObject.review + "<br />" + "Rating: " + '<span class="' + "stars-container stars-" + firstObject.rating * 20 + '">★★★★★</span> </div>' +
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + firstObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + firstObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + firstObject.name + "</h2>" + firstObject.review + "<br />" + '<span class="' + "stars-container stars-" + firstObject.rating * 20 + '">★★★★★</span> </div>' +
                     "<hr /><br />" +
-                    "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + secondObject.reviewerName + " </h5>" + "<br />" + "Name: " + secondObject.name + "<br />" + "Review: " + secondObject.review + "<br />" + "Rating: " + '<span class="' + "stars-container stars-" + secondObject.rating * 20 + '">★★★★★</span> </div>';
+                    "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + secondObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + secondObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + secondObject.name + "</h2>" + secondObject.review + "<br />" + '<span class="' + "stars-container stars-" + secondObject.rating * 20 + '">★★★★★</span> </div>'
             }
             if (e.features[0].properties.third != undefined){
                 component.setState({popupOpened: true});
                 let firstObject = JSON.parse(e.features[0].properties.first);
                 let secondObject = JSON.parse(e.features[0].properties.second);
                 let thirdObject = JSON.parse(e.features[0].properties.third);
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + firstObject.reviewerName + " </h5>" + "<br />" + "Name: " + firstObject.name + "<br />" + "Review: " + firstObject.review + "<br />" + "Rating: " + '<span class="' + "stars-container stars-" + firstObject.rating * 20 + '">★★★★★</span> </div>' +
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + firstObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + firstObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + firstObject.name + "</h2>" + firstObject.review + "<br />" + '<span class="' + "stars-container stars-" + firstObject.rating * 20 + '">★★★★★</span> </div>' +
                     "<hr /><br />" +
-                    "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + secondObject.reviewerName + " </h5>" + "<br />" + "Name: " + secondObject.name + "<br />" + "Review: " + secondObject.review + "<br />" + "Rating: " + '<span class="' + "stars-container stars-" + secondObject.rating * 20 + '">★★★★★</span> </div>' +
+                    "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + secondObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + secondObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + secondObject.name + "</h2>" + secondObject.review + "<br />" + '<span class="' + "stars-container stars-" + secondObject.rating * 20 + '">★★★★★</span> </div>' +
                     "<hr /><br />" +
-                    "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=\"Smiley face\"  align='left'> <div class='reviewtekst' align='left'><h5>Review by: " + thirdObject.reviewerName + " </h5>" + "<br />" + "Name: " + thirdObject.name + "<br />" + "Review: " + thirdObject.review + "<br />" + "Rating: " + '<span class="' + "stars-container stars-" + thirdObject.rating * 20 + '">★★★★★</span> </div>';
+                    "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + thirdObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + thirdObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + thirdObject.name + "</h2>" + thirdObject.review + "<br />" + '<span class="' + "stars-container stars-" + thirdObject.rating * 20 + '">★★★★★</span> </div>'
             }
 
             e.preventDefault();
