@@ -156,7 +156,7 @@ export default class Mapbox extends React.Component {
         map.on('click', function(e) {
             if (!component.state.pointClicked && !component.state.popupOpened && !component.state.newPointClicked){
 
-                if (document.getElementById('newLocationToggle').value == "On"){
+                // if (document.getElementById('newLocationToggle').value == "On"){
                     var coordinates = [];
                     coordinates.push(e.lngLat.lng);
                     coordinates.push(e.lngLat.lat);
@@ -179,7 +179,7 @@ export default class Mapbox extends React.Component {
                             "<input type='hidden' id= 'lat' name='lat' value=" + e.lngLat.lat + " class='btn'></div>"
                         )
                         .addTo(map);
-                }
+                // }
 
             }
 
@@ -278,13 +278,11 @@ export default class Mapbox extends React.Component {
 
         return (
             <div>
-                <select id="newLocationToggle">
-                    <option value="On">On</option>
-                    <option value="Off">Off</option>
-                </select>
-                {/*<div className="inline-block absolute top left mt12 ml12 bg-darken75 color-white z1 py6 px12 round-full txt-s txt-bold">*/}
-                {/*    <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>*/}
-                {/*</div>*/}
+                {/*<select id="newLocationToggle">*/}
+                {/*    <option value="On">On</option>*/}
+                {/*    <option value="Off">Off</option>*/}
+                {/*</select>*/}
+
                 <div ref={el => this.mapContainer = el} className="mapdiv" />
             </div>
         );
