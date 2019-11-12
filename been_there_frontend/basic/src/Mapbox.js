@@ -125,7 +125,13 @@ export default class Mapbox extends React.Component {
             popup.style.display = "block";
 
             if (e.features[0].properties.name == undefined && e.features[0].properties.second == undefined && e.features[0].properties.third == undefined){
-                popup.innerHTML = 'Cluster clicked';
+                // popup.innerHTML = 'Cluster clicked';
+                popup.style.display = "none";
+
+                console.log(e.lngLat);
+                map.zoomIn(2);
+                var zoom = map.getZoom();
+                map.flyTo({center: e.lngLat, zoom: 10});
             }
         });
 
@@ -149,28 +155,38 @@ export default class Mapbox extends React.Component {
 
         map.on('click', function(e) {
             if (!component.state.pointClicked && !component.state.popupOpened && !component.state.newPointClicked){
-                var coordinates = [];
-                coordinates.push(e.lngLat.lng);
-                coordinates.push(e.lngLat.lat);
 
-                popup.setLngLat(e.lngLat)
-                    .setHTML("<input type=\"text\" id= 'Name' name=\"Name\" value=\"Name\"><br>\n" +
-                        "<input type=\"text\" id= 'Review' name=\"Review\" value=\"Review\"><br>" +
-                        "<input type=\"number\" id= 'Rating' name=\"Rating\" value=\"Rating\"><br>\n" +
-                        "<button id='saveButton' type='button'>Save</button>" + "<button id='closeButton' type='button'>Cancel</button>" +
-                        "<input type=\"hidden\" id= 'lng' name=\"lng\" value=" + e.lngLat.lng + "><br>" +
-                        "<input type=\"hidden\" id= 'lat' name=\"lat\" value=" + e.lngLat.lat + ">"
-                    )
-                    .addTo(map);
+                if (document.getElementById('newLocationToggle').value == "On"){
+                    var coordinates = [];
+                    coordinates.push(e.lngLat.lng);
+                    coordinates.push(e.lngLat.lat);
+
+                    popup.setLngLat(e.lngLat)
+                        .setHTML("<div class='form-group'><h10>Add a new review</h10> <hr/>" +
+                            "<input type='text' id= 'Name' name='Name' placeholder='Title' class='form-control'><br>\n" +
+                            "<textarea id= 'Review' name='Review' name='textarea' rows='4' class='form-control' placeholder='Review'></textarea><hr/>" +
+                            "<label>Rating(0-5)</label>" +
+                            "<select class='form-control' id='Rating'>" +
+                            "<option>0</option>\n" +
+                            "<option>1</option>\n" +
+                            "<option>2</option>\n" +
+                            "<option>3</option>\n" +
+                            "<option>4</option>\n" +
+                            "<option>5</option>" +
+                            "</select><br />" +
+                            "<button class='btn btn-primary' style='border-radius: 5px' id='saveButton' type='button'>Save</button>" + "  " + "<button class='btn btn-danger' style='border-radius: 5px' id='closeButton' type='button'>Cancel</button>" +
+                            "<input type='hidden' id= 'lng' name='lng' value=" + e.lngLat.lng + "><br>" +
+                            "<input type='hidden' id= 'lat' name='lat' value=" + e.lngLat.lat + " class='btn'></div>"
+                        )
+                        .addTo(map);
+                }
+
             }
 
             if (document.getElementById('closeButton') != null){
                 document.getElementById('closeButton').onclick = function cancelClicked(){popup.remove()};
             }if (document.getElementById('saveButton') != null){
                 document.getElementById('saveButton').onclick = function saveClicked(e){
-                    component.setState({tempReview: document.getElementById('Review').value});
-                    component.setState({tempRating: document.getElementById('Rating').value});
-                    component.setState({tempName: document.getElementById('Name').value});
                     var name = document.getElementById('Name').value;
                     var review = document.getElementById('Review').value;
                     var rating = document.getElementById('Rating').value;
@@ -226,29 +242,6 @@ export default class Mapbox extends React.Component {
                     // component.setState({newPointClicked: false});
 
             }
-
-            // console.log(e);
-            // var newLocation = {};
-            // newLocation.type = "FeatureCollection";
-            //
-            // var features = []
-            // newLocation.features = features;
-            // var newFeature = {};
-            // features.push(newFeature);
-            // newFeature.type = "Feature";
-            // var properties = {};
-            // properties.name = "Testlocation";
-            // newFeature.properties = properties;
-            //
-            // var geometry = {};
-            // newFeature.geometry = geometry;
-            // geometry.type = "Point";
-            // var coordinates = [];
-            // coordinates.push(e.lngLat.lng);
-            // coordinates.push(e.lngLat.lat);
-            //
-            // geometry.coordinates = coordinates;
-            // var abc = JSON.stringify(newLocation);
         });
 
         var geocoder = new MapboxGeocoder({
@@ -285,6 +278,10 @@ export default class Mapbox extends React.Component {
 
         return (
             <div>
+                <select id="newLocationToggle">
+                    <option value="On">On</option>
+                    <option value="Off">Off</option>
+                </select>
                 {/*<div className="inline-block absolute top left mt12 ml12 bg-darken75 color-white z1 py6 px12 round-full txt-s txt-bold">*/}
                 {/*    <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>*/}
                 {/*</div>*/}
