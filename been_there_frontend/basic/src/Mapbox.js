@@ -98,7 +98,9 @@ export default class Mapbox extends React.Component {
 
             if (name != undefined){
                 component.setState({popupOpened: true});
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> </div>';
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> <button type="button" class="close" aria-label="Close">\n' +
+                    '  <span aria-hidden="true">&times;</span>\n' +
+                    '</button> </div>';
             }
             if (e.features[0].properties.first != undefined && e.features[0].properties.second != undefined && e.features[0].properties.third == undefined){
                 component.setState({popupOpened: true});

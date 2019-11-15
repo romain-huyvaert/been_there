@@ -9,9 +9,14 @@ export default class Application extends React.Component {
 
         return (
             <div>
+
                 <Header />
+                <button type="button" className="btn btn-danger" id="addPinpoint">Primary</button>
+
+
                 <Mapbox />
-                <div id="popupDiv"></div>
+                <div id="popupDiv"> </div>
+
             </div>
         );
     }
