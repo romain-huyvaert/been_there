@@ -71,12 +71,6 @@ h2 {
     max-height: 40vh;
 }
 
-#newLocationToggle{
-    display: block;
-    position: absolute;
-    z-index: 50;
-}
-
 .mapdiv {
     position: absolute;
     top: 0;
@@ -199,8 +193,22 @@ h10{
 }
 
 
+
 #addPinpoint {
     position: absolute;
     z-index: 100;
     right: 10px;
+    background-color: #ffffff;
+    color: #333333;
+    border-radius: 5px;
+    border-color: #dad5ce;
+    border-width: 1.3px;
+    /*font-size: 10px;*/
+    padding: 2.8px 8.3px 2.8px 8.3px;
+    top: 100px;
 }
+
+#addPinpoint.active{
+    color: #39b7e6;
+}
+

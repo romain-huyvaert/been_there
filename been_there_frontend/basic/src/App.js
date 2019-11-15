@@ -11,10 +11,8 @@ export default class Application extends React.Component {
             <div>
 
                 <Header />
-                <button type="button" className="btn btn-danger" id="addPinpoint">Primary</button>
-
-
-                <Mapbox />
+                <button type="button" className="btn" id="addPinpoint" data-toggle="button"><i className="fa fa-map-marker fa-lg" aria-label='Find my location'></i></button>
+               <Mapbox />
                 <div id="popupDiv"> </div>
 
             </div>

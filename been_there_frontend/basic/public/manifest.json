@@ -16,10 +16,16 @@
       "src": "512x512_versie_1.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "192x192_versie_4.png",
+      "sizes": "144x144",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#6b44cc",
-  "background_color": "#6b44cc"
+  "background_color": "#6b44cc",
+  "orientation": "portrait"
 }

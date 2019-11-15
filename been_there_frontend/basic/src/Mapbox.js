@@ -5,14 +5,9 @@ import Data from './data.geojson';
 import './App.css';
 import myImage from './192x192_versie_1.png';
 
-
-// import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
-
 // "homepage": "https://alexpost95.github.io/C-CTest/",
 
-
 var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
-// var MapboxDraw = require('@mapbox/mapbox-gl-draw');
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleHBvc3QiLCJhIjoiY2p2MmdmcHV2MHl0YTQ5cWN6bWR6Zm5jaiJ9.glKqi6Jo4dp4esW7k_CBFA';
 
@@ -27,7 +22,8 @@ export default class Mapbox extends React.Component {
             pointClicked: false,
             popupOpened: false,
             newPointClicked: false,
-            index: 0
+            index: 0,
+            addNewPinpoint: false
         };
     }
 
@@ -43,6 +39,10 @@ export default class Mapbox extends React.Component {
             zoom
         });
 
+        document.getElementById('addPinpoint').addEventListener("click", function (e) {
+            component.setState({addNewPinpoint: !component.state.addNewPinpoint});
+        });
+
         map.on('move', () => {
             const { lng, lat } = map.getCenter();
 
@@ -53,7 +53,12 @@ export default class Mapbox extends React.Component {
             });
         });
 
+
+
         map.on('load', () => {
+            map.loadImage('https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png', function(error, image){
+                map.addImage('newLocationPointer', image);
+            });
 
             map.loadImage(myImage, function(error, image) {
                 if (error) throw error;
@@ -98,9 +103,13 @@ export default class Mapbox extends React.Component {
 
             if (name != undefined){
                 component.setState({popupOpened: true});
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> <button type="button" class="close" aria-label="Close">\n' +
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> <button id="popupCloseButton" type="button" class="close" aria-label="Close">\n' +
                     '  <span aria-hidden="true">&times;</span>\n' +
                     '</button> </div>';
+
+                document.getElementById("popupCloseButton").addEventListener("click", function (e) {
+                    popup.style.display = "none";
+                });
             }
             if (e.features[0].properties.first != undefined && e.features[0].properties.second != undefined && e.features[0].properties.third == undefined){
                 component.setState({popupOpened: true});
@@ -142,15 +151,10 @@ export default class Mapbox extends React.Component {
             // closeOnClick: false
         });
 
-        // var nav = new mapboxgl.NavigationControl();
-        // map.addControl(nav, 'top-left');
-
-// Change the cursor to a pointer when the mouse is over the places layer.
         map.on('mouseenter', 'beenThereLocations', () => {
             map.getCanvas().style.cursor = 'pointer';
         });
 
-// Change it back to a pointer when it leaves.
         map.on('mouseleave', 'beenThereLocations', () => {
             map.getCanvas().style.cursor = '';
         });
@@ -158,7 +162,7 @@ export default class Mapbox extends React.Component {
         map.on('click', function(e) {
             if (!component.state.pointClicked && !component.state.popupOpened && !component.state.newPointClicked){
 
-                // if (document.getElementById('newLocationToggle').value == "On"){
+                if (component.state.addNewPinpoint == true){
                     var coordinates = [];
                     coordinates.push(e.lngLat.lng);
                     coordinates.push(e.lngLat.lat);
@@ -181,7 +185,7 @@ export default class Mapbox extends React.Component {
                             "<input type='hidden' id= 'lat' name='lat' value=" + e.lngLat.lat + " class='btn'></div>"
                         )
                         .addTo(map);
-                // }
+                }
 
             }
 
@@ -198,9 +202,41 @@ export default class Mapbox extends React.Component {
                     coordinates.push(lng, lat);
                     var layerId = "newPoint"+component.state.index++;
 
+                    // map.addLayer({
+                    //     "id": layerId,
+                    //     "type": "circle",
+                    //     "source": {
+                    //         "type": "geojson",
+                    //         "data": {
+                    //             "type": "FeatureCollection",
+                    //             "features": [{
+                    //                 "type": "Feature",
+                    //                 "properties": {
+                    //                     "name": name,
+                    //                     "rating": rating,
+                    //                     "review": review,
+                    //                     "reviewer": '123456',
+                    //                     "reviewerName": 'random dude',
+                    //                     "icon": "rocket"
+                    //                 },
+                    //                 "geometry": {
+                    //                     "type": "Point",
+                    //                     "coordinates": coordinates
+                    //                 }
+                    //             }]
+                    //         }
+                    //     },
+                    //     paint: {
+                    //         'circle-color': '#cc000b',
+                    //         'circle-radius': 8,
+                    //         'circle-stroke-width': 1,
+                    //         'circle-stroke-color': '#ffcf4b'
+                    //     },
+                    // });
+
                     map.addLayer({
                         "id": layerId,
-                        "type": "circle",
+                        "type": "symbol",
                         "source": {
                             "type": "geojson",
                             "data": {
@@ -222,12 +258,10 @@ export default class Mapbox extends React.Component {
                                 }]
                             }
                         },
-                        paint: {
-                            'circle-color': '#cc000b',
-                            'circle-radius': 8,
-                            'circle-stroke-width': 1,
-                            'circle-stroke-color': '#ffcf4b'
-                        },
+                        "layout": {
+                            "icon-image": "newLocationPointer",
+                            "icon-size": 0.08
+                        }
                     });
                     map.on('click', layerId, function(e){
                         component.setState({newPointClicked: true});
@@ -241,7 +275,6 @@ export default class Mapbox extends React.Component {
                     })
 
                     popup.remove()};
-                    // component.setState({newPointClicked: false});
 
             }
         });
