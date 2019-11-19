@@ -128,9 +128,12 @@ export default class Mapbox extends React.Component {
                     "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + thirdObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + thirdObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + thirdObject.name + "</h2>" + thirdObject.review + "<br />" + '<span class="' + "stars-container stars-" + thirdObject.rating * 20 + '">★★★★★</span> </div>'
             }
 
-            document.getElementById("popupCloseButton").addEventListener("click", function (e) {
-                popup.style.display = "none";
-            });
+            if (document.getElementById("popupCloseButton") !== null) {
+                document.getElementById("popupCloseButton").addEventListener("click", function (e) {
+                    popup.style.display = "none";
+                });
+            }
+
             e.preventDefault();
 
             popup.style.display = "block";
