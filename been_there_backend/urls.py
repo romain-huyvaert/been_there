@@ -13,8 +13,20 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api/pinpoint/list/', PinpointViews.pinpoint_list),
+
+
+    # Pinpoint View
+    path('api/pinpoint/', PinpointViews.pinpoint_list),
+
+
+    # User View
     path('api/users/', UserViews.user_list),
+
+
+    # Review View
     path('api/reviews/', ReviewViews.review_list),
+
+
+    # Worldmap View
     path('api/worldmap', WorldMapViews.worldmap_list),
 ]

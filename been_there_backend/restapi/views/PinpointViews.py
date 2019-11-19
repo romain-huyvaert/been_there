@@ -6,7 +6,6 @@ from django.core.serializers import serialize
 from rest_framework.response import Response
 from rest_framework import status
 
-#
 # class PinpointViewSet(viewsets.ModelViewSet):
 #     """
 #     API endpoint that allows pinpoints to be viewed or edited.
@@ -19,12 +18,12 @@ from rest_framework import status
 def pinpoint_list(request):
     """Get the list of all pinpoints : return GEOJSON format"""
     pinpoints = Pinpoint.objects.all()
+
     if pinpoints:
         return Response(
             serialize('geojson',
                       pinpoints,
                       geometry_field='point',
-                      fields=('name', 'rating', 'review', 'reviewer', 'reviewerName')
                       ),
             status=status.HTTP_200_OK
         )
@@ -34,21 +33,11 @@ def pinpoint_list(request):
 
 @api_view(['GET'])
 def create_pinpoint(request):
-    name = request.data['name']
-    rating = request.data['rating']
-    review = request.data['review']
-    reviewer = request.data['reviewer']
-    x = request.data['x']
-    y = request.data['y']
+    point = request.data['point']
 
-    if name and rating and review and reviewer and x and y:
+    if point:
         pinpoint = Pinpoint.objects.create(
-            name=name,
-            rating=rating,
-            review=review,
-            reviewer=reviewer,
-            x=x,
-            y=y,
+            point=point
         )
 
         if pinpoint:
