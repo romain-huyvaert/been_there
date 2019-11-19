@@ -9,9 +9,12 @@ export default class Application extends React.Component {
 
         return (
             <div>
+
                 <Header />
-                <Mapbox />
-                <div id="popupDiv"></div>
+                <button type="button" className="btn" id="addPinpoint" data-toggle="button"><i className="fa fa-map-marker fa-lg" aria-label='Find my location'></i></button>
+               <Mapbox />
+                <div id="popupDiv"> </div>
+
             </div>
         );
     }

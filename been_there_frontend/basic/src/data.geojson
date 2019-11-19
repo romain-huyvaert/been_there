@@ -4,27 +4,214 @@
       {
          "type":"Feature",
          "properties":{
-         "first": {
-            "name":"London Eye 1",
-            "rating":"4",
-            "review":"Great way to get an overview of London and the Themes. Costs about 10 pounds but totally worth it.",
-            "reviewer":"254862",
-            "reviewerName":"Alex"
+            "first":{
+               "name":"Restaurant 't nonnetje'",
+               "rating":"3",
+               "review":"Very nice view over the water. The food is alright, not very special but the view makes up for it",
+               "reviewer":"254862",
+               "reviewerName":"James"
             },
-         "second": {
-            "name":"London Eye 2",
-            "rating":"3",
-            "review":"It was a bit meh. Totally overrated, although it gives a good overview of the city",
-            "reviewer":"254862",
-            "reviewerName":"Hank"
+            "second":{
+               "name":"London Eye 2",
+               "rating":"3",
+               "review":"It was a bit meh. Totally overrated, although it gives a good overview of the city",
+               "reviewer":"254862",
+               "reviewerName":"Hank"
+            },
+            "third":{
+               "name":"London Eye 3",
+               "rating":"1",
+               "review":"Boring. Waited for an hour to get in, was done in 10 minutes. Waste of time",
+               "reviewer":"254862",
+               "reviewerName":"Lewis"
+            }
          },
-         "third": {
-            "name":"London Eye 3",
-            "rating":"1",
-            "review":"Boring. Waited for an hour to get in, was done in 10 minutes. Waste of time",
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.153309345245361,
+               52.251726973451085
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Awesome little restaurant",
+            "rating":"5",
+            "review":"This is one of those gems you don't see on trip advisor or any website. This is a beautifull little restaurant that is run by two amazing people. They are very kind and generous. Furthermore, the prices are very reasonable, this is cheap compared to the restaurants in the city",
             "reviewer":"254862",
-            "reviewerName":"Lewis"
-         }},
+            "reviewerName":"Emma"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.137390434741974,
+               52.26108227818776
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Great bar",
+            "rating":"4",
+            "review":"A great bar where you can watch soccer or any other sports that's live on tv. My friend and I had a great time here and Tom the bartender was very kind. ",
+            "reviewer":"254862",
+            "reviewerName":"Collin"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               5.958817005157471,
+               52.21342486045911
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Souvenir shop",
+            "rating":"3",
+            "review":"Cheap store to buy some dutch souvenirs. Definitely buy your souvenirs here instead of Amsterdam or Schiphol. ",
+            "reviewer":"254862",
+            "reviewerName":"Oliver"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               5.967464447021484,
+               52.212787197982266
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Snackbar de Halte",
+            "rating":"2",
+            "review":"Good looking snackbar with not so good tasting food",
+            "reviewer":"254862",
+            "reviewerName":"Harry"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               5.615113377571106,
+               52.30060954373126
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Beer heaven",
+            "rating":"5",
+            "review":"If you want to buy some special beers, this is the place to be. They have around 2000 kind of beers, it's amazing!!!",
+            "reviewer":"254862",
+            "reviewerName":"Emily"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               5.6312039494514465,
+               52.2967515764531
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Restaurant de boot",
+            "rating":"3",
+            "review":"We had some lunch here. It was nice to sit and eat here, the view of the water and the harbor is very pretty.",
+            "reviewer":"254862",
+            "reviewerName":"Donald"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               5.43670892715454,
+               52.523219278273366
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Nice and quiet park",
+            "rating":"4",
+            "review":"Quiet little park, we did a little picknick here and it was very nice. ",
+            "reviewer":"254862",
+            "reviewerName":"Megan"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               5.460376739501953,
+               52.51512399645691
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Coffeeshop Relax",
+            "rating":"3",
+            "review":"They have great stuff to help you relax but the coffee is not so good. This is a dutch coffeeshop that sells weed and other soft drugs",
+            "reviewer":"254862",
+            "reviewerName":"Bob"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.1945295333862305,
+               52.6959579466952
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "name":"Cafe Oasis",
+            "rating":"2",
+            "review":"A basic cafe where you can get something to drink and eat. Don't expect to much. The waiter who helped us was very grumpy and that is why I give it 2 stars",
+            "reviewer":"254862",
+            "reviewerName":"Lucy"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.188996136188506,
+               52.697331504752235
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "first":{
+               "name":"London Eye 1",
+               "rating":"4",
+               "review":"Great way to get an overview of London and the Themes. Costs about 10 pounds but totally worth it.",
+               "reviewer":"254862",
+               "reviewerName":"Alex"
+            },
+            "second":{
+               "name":"London Eye 2",
+               "rating":"3",
+               "review":"It was a bit meh. Totally overrated, although it gives a good overview of the city",
+               "reviewer":"254862",
+               "reviewerName":"Hank"
+            },
+            "third":{
+               "name":"London Eye 3",
+               "rating":"1",
+               "review":"Boring. Waited for an hour to get in, was done in 10 minutes. Waste of time",
+               "reviewer":"254862",
+               "reviewerName":"Lewis"
+            }
+         },
          "geometry":{
             "type":"Point",
             "coordinates":[
@@ -36,20 +223,21 @@
       {
          "type":"Feature",
          "properties":{
-            "first": {
-                "name":"Tower Bridge first",
-                "rating":"3",
-                "review":"Beautiful old bridge, a real London landmark. Can't be missed when you visit London.",
-                "reviewer":"254862",
-                "reviewerName":"Rob"
+            "first":{
+               "name":"Tower Bridge first",
+               "rating":"3",
+               "review":"Beautiful old bridge, a real London landmark. Can't be missed when you visit London.",
+               "reviewer":"254862",
+               "reviewerName":"Rob"
             },
-            "second": {
-                "name":"Second Tower Bridge second",
-                "rating":"5",
-                "review":"Beautiful old bridge, a real London landmark. Can't be missed when you visit London.",
-                "reviewer":"254862",
-                "reviewerName":"Rob"
-         }},
+            "second":{
+               "name":"Second Tower Bridge second",
+               "rating":"5",
+               "review":"Beautiful old bridge, a real London landmark. Can't be missed when you visit London.",
+               "reviewer":"254862",
+               "reviewerName":"Rob"
+            }
+         },
          "geometry":{
             "type":"Point",
             "coordinates":[

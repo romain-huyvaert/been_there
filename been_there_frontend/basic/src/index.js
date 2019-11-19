@@ -4,7 +4,6 @@ import App from './App'
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
-
 class Application extends React.Component {
 
   render() {
@@ -19,6 +18,6 @@ class Application extends React.Component {
 
 ReactDOM.render(<Application />, document.getElementById('app'));
 
-serviceWorker.unregister();
+serviceWorker.register();
 
 
