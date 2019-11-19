@@ -4,6 +4,7 @@ import mapboxgl from 'mapbox-gl'
 import Data from './data.geojson';
 import './App.css';
 import myImage from './192x192_versie_1.png';
+import axios from 'axios'
 
 // "homepage": "https://alexpost95.github.io/C-CTest/",
 
@@ -101,12 +102,12 @@ export default class Mapbox extends React.Component {
             let reviewerName = e.features[0].properties.reviewerName;
             let rating = e.features[0].properties.rating;
 
-            if (name != undefined){
+            if (name !== undefined){
                 component.setState({popupOpened: true});
                 popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
                     '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
             }
-            if (e.features[0].properties.first != undefined && e.features[0].properties.second != undefined && e.features[0].properties.third == undefined){
+            if (e.features[0].properties.first !== undefined && e.features[0].properties.second !== undefined && e.features[0].properties.third === undefined){
                 component.setState({popupOpened: true});
                 let firstObject = JSON.parse(e.features[0].properties.first);
                 let secondObject = JSON.parse(e.features[0].properties.second);
@@ -115,7 +116,7 @@ export default class Mapbox extends React.Component {
                     "<hr /><br />" +
                     "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + secondObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + secondObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + secondObject.name + "</h2>" + secondObject.review + "<br />" + '<span class="' + "stars-container stars-" + secondObject.rating * 20 + '">★★★★★</span> </div>'
             }
-            if (e.features[0].properties.third != undefined){
+            if (e.features[0].properties.third !== undefined){
                 component.setState({popupOpened: true});
                 let firstObject = JSON.parse(e.features[0].properties.first);
                 let secondObject = JSON.parse(e.features[0].properties.second);
@@ -138,7 +139,7 @@ export default class Mapbox extends React.Component {
 
             popup.style.display = "block";
 
-            if (e.features[0].properties.name == undefined && e.features[0].properties.second == undefined && e.features[0].properties.third == undefined){
+            if (e.features[0].properties.name === undefined && e.features[0].properties.second === undefined && e.features[0].properties.third === undefined){
                 // popup.innerHTML = 'Cluster clicked';
                 popup.style.display = "none";
 
@@ -165,7 +166,7 @@ export default class Mapbox extends React.Component {
         map.on('click', function(e) {
             if (!component.state.pointClicked && !component.state.popupOpened && !component.state.newPointClicked){
 
-                if (component.state.addNewPinpoint == true){
+                if (component.state.addNewPinpoint === true){
                     var coordinates = [];
                     coordinates.push(e.lngLat.lng);
                     coordinates.push(e.lngLat.lat);
@@ -204,6 +205,14 @@ export default class Mapbox extends React.Component {
                     var coordinates = [];
                     coordinates.push(lng, lat);
                     var layerId = "newPoint"+component.state.index++;
+
+                    axios({
+                        method: 'post',
+                        url: '/api/pinpoints/add/',
+                        data: {
+                            point: coordinates
+                        }
+                    });
 
                     map.addLayer({
                         "id": layerId,

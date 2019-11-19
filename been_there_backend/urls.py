@@ -16,8 +16,8 @@ urlpatterns = [
 
 
     # Pinpoint View
-    path('api/pinpoint/', PinpointViews.pinpoint_list),
-
+    path('api/pinpoints/', PinpointViews.pinpoint_list),
+    path('api/pinpoints/add/', PinpointViews.create_pinpoint),
 
     # User View
     path('api/users/', UserViews.user_list),

@@ -31,9 +31,9 @@ def pinpoint_list(request):
     return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def create_pinpoint(request):
-    point = request.data['point']
+    point = 'POINT(' + request.data['point'][0] + ' ' + request.data['point'][1] + ')'
 
     if point:
         pinpoint = Pinpoint.objects.create(
