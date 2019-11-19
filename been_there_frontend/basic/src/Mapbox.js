@@ -102,13 +102,11 @@ export default class Mapbox extends React.Component {
             let rating = e.features[0].properties.rating;
 
             if (name != undefined){
-                console.log('1');
                 component.setState({popupOpened: true});
                 popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
                     '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
             }
             if (e.features[0].properties.first != undefined && e.features[0].properties.second != undefined && e.features[0].properties.third == undefined){
-                console.log('2');
                 component.setState({popupOpened: true});
                 let firstObject = JSON.parse(e.features[0].properties.first);
                 let secondObject = JSON.parse(e.features[0].properties.second);
@@ -118,7 +116,6 @@ export default class Mapbox extends React.Component {
                     "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + secondObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + secondObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + secondObject.name + "</h2>" + secondObject.review + "<br />" + '<span class="' + "stars-container stars-" + secondObject.rating * 20 + '">★★★★★</span> </div>'
             }
             if (e.features[0].properties.third != undefined){
-                console.log('3');
                 component.setState({popupOpened: true});
                 let firstObject = JSON.parse(e.features[0].properties.first);
                 let secondObject = JSON.parse(e.features[0].properties.second);
