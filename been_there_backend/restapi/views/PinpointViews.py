@@ -1,6 +1,4 @@
 from ..models import Pinpoint
-from rest_framework import viewsets
-from been_there_backend.restapi.serializers import PinpointSerializer
 from rest_framework.decorators import api_view
 from django.core.serializers import serialize
 from rest_framework.response import Response
@@ -32,7 +30,7 @@ def pinpoint_list(request):
 
 
 @api_view(['POST'])
-def create_pinpoint(request):
+def insert_pinpoint(request):
     point = 'POINT(' + request.data['point'][0] + ' ' + request.data['point'][1] + ')'
 
     if point:

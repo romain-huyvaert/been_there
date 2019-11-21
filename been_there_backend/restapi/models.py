@@ -13,16 +13,18 @@ class User(models.Model):
     name = models.CharField(null=False, max_length=100)
     friends = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
 
-
 # """
-# Class Pinpoint
+# Class Review : Review and Pinpoint merged in one table, request on click or all data ?
 # """
-# class Pinpoint(models.Model):
-#     name        = models.CharField(null=False, max_length=100)
-#     rating      = models.IntegerField(null=False, validators=[MaxValueValidator(0), MinValueValidator(5)])
-#     review      = models.CharField(null=False, max_length=500)
-#     reviewer    = models.ForeignKey(User, on_delete=models.CASCADE)
-#     point       = gis_models.PointField(null=False, spatial_index=True, geography=True)
+# class Review(models.Model):
+#     title       = models.CharField(null=False, max_length=80)
+#     rating      = models.IntegerField(null=False)
+#     text        = models.CharField(max_length=500)
+#     date        = models.DateField(null=False)
+#     time        = models.TimeField(null=False)
+#     user        = models.ForeignKey(User, on_delete=models.CASCADE)
+#     point       = gis_models.PointField(null=False, spatial_index=True, geography=True, unique=True)
+#     #TODO picture storage
 
 
 """
@@ -38,7 +40,7 @@ Class Review
 class Review(models.Model):
     title       = models.CharField(null=False, max_length=80)
     rating      = models.IntegerField(null=False)
-    text        = models.CharField(max_length=500)
+    text        = models.CharField(max_length=500, unique=True)
     date        = models.DateField(null=False)
     time        = models.TimeField(null=False)
     user        = models.ForeignKey(User, on_delete=models.CASCADE)

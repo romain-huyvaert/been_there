@@ -17,7 +17,7 @@ urlpatterns = [
 
     # Pinpoint View
     path('api/pinpoints/', PinpointViews.pinpoint_list),
-    path('api/pinpoints/add/', PinpointViews.create_pinpoint),
+    path('api/pinpoints/add/', PinpointViews.insert_pinpoint),
 
     # User View
     path('api/users/', UserViews.user_list),
@@ -25,8 +25,9 @@ urlpatterns = [
 
     # Review View
     path('api/reviews/', ReviewViews.review_list),
+    path('api/reviews/add/', ReviewViews.insert_review),
 
 
     # Worldmap View
-    path('api/worldmap', WorldMapViews.worldmap_list),
+    path('api/worldmap/', WorldMapViews.worldmap_list),
 ]
