@@ -64,21 +64,28 @@ export default class Mapbox extends React.Component {
             map.loadImage(myImage, function(error, image) {
                 if (error) throw error;
                 map.addImage('pointer', image);
-                map.addLayer({
-                    id: 'beenThereLocations',
-                    type: 'symbol',
-                    source: {
-                        type: 'geojson',
-                        data: Data,
-                        cluster: true,
-                        clusterMaxZoom: 20,
-                        clusterRadius: 5
-                    },
-                    "layout": {
-                        "icon-image": "pointer",
-                        "icon-size": 0.3,
-                        "icon-allow-overlap": true
-                    }
+
+                let response = axios({
+                    method: 'get',
+                    url: '/api/reviews/',
+                    data: {}
+                }).then(function(response) {
+                    map.addLayer({
+                        id: 'beenThereLocations',
+                        type: 'symbol',
+                        source: {
+                            type: 'geojson',
+                            data: Data,
+                            cluster: true,
+                            clusterMaxZoom: 20,
+                            clusterRadius: 5
+                        },
+                        "layout": {
+                            "icon-image": "pointer",
+                            "icon-size": 0.3,
+                            "icon-allow-overlap": true
+                        }
+                    });
                 });
             });
         });

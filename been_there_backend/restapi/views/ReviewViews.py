@@ -17,7 +17,7 @@ def review_list(request):
             serialize('geojson',
                       reviews,
                       geometry_field='point',
-                      fields=('title', 'rating', 'text', 'date', 'time', 'user', 'point')),
+                      fields=('title', 'rating', 'text', 'date', 'time', 'user')),
             status=status.HTTP_200_OK)
 
     return Response({}, status=status.HTTP_200_OK)

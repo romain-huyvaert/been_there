@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'been_there_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'been_there_db',
-        'USER': 'bt_admin',
-        'PASSWORD': 'admin123',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': 'postgres',
+        'USER': 'BTMaster',
+        'PASSWORD': 'BCtn2jAFZL',
+        'HOST': 'been-there.ciihojrwzxfz.eu-west-3.rds.amazonaws.com',
+        'PORT': '5445',
     }
 }
 
