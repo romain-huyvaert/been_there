@@ -30,7 +30,6 @@ export default class Mapbox extends React.Component {
     componentDidMount() {
         const { lng, lat, zoom } = this.state;
         var component = this;
-        var testIds = [];
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
@@ -52,8 +51,6 @@ export default class Mapbox extends React.Component {
                 zoom: map.getZoom().toFixed(2)
             });
         });
-
-
 
         map.on('load', () => {
             map.loadImage('https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png', function(error, image){
@@ -166,10 +163,14 @@ export default class Mapbox extends React.Component {
             if (!component.state.pointClicked && !component.state.popupOpened && !component.state.newPointClicked){
 
                 if (component.state.addNewPinpoint == true){
+                    map.flyTo({center: e.lngLat});
+
+
                     var coordinates = [];
                     coordinates.push(e.lngLat.lng);
                     coordinates.push(e.lngLat.lat);
 
+                    // alert(window.innerHeight);
                     popup.setLngLat(e.lngLat)
                         .setHTML("<div class='form-group'><h10>Add a new review</h10> <hr/>" +
                             "<input type='text' id= 'Name' name='Name' placeholder='Title' class='form-control'><br>\n" +
@@ -183,13 +184,13 @@ export default class Mapbox extends React.Component {
                             "<option>4</option>\n" +
                             "<option>5</option>" +
                             "</select><br />" +
+                            // "<input type='datetime-local'>" +
                             "<button class='btn btn-primary' style='border-radius: 5px' id='saveButton' type='button'>Save</button>" + "  " + "<button class='btn btn-danger' style='border-radius: 5px' id='closeButton' type='button'>Cancel</button>" +
                             "<input type='hidden' id= 'lng' name='lng' value=" + e.lngLat.lng + "><br>" +
                             "<input type='hidden' id= 'lat' name='lat' value=" + e.lngLat.lat + " class='btn'></div>"
                         )
                         .addTo(map);
                 }
-
             }
 
             if (document.getElementById('closeButton') != null){
@@ -246,7 +247,6 @@ export default class Mapbox extends React.Component {
                     })
 
                     popup.remove()};
-
             }
         });
 
