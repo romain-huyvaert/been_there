@@ -5,6 +5,14 @@ import sys
 
 
 def main():
+
+    # Please fill in the PostgreSQL database informations
+    os.environ['DB_NAME'] = ''
+    os.environ['DB_USER'] = ''
+    os.environ['DB_PASSWORD'] = ''
+    os.environ['DB_HOST'] = ''
+    os.environ['DB_PORT'] = ''
+
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'been_there_backend.settings')
     try:
         from django.core.management import execute_from_command_line
