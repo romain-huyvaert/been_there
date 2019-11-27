@@ -172,11 +172,32 @@ img {
 .stars-90:after { width: 90%; }
 .stars-100:after { width: 100%;}
 
+/*@media only screen and (max-width: 480px) {*/
+/*    .mapboxgl-popup-content {*/
+/*        max-height: 100px;*/
+/*    }*/
+/*}*/
+
+@media all and (max-width: 768px){
+    .mapboxgl-popup-content{
+        height: 275px;
+        width: 225px;
+    }
+}
+
+/*.mapboxgl-popup{*/
+/*    transform:none !important;*/
+/*    top: 100px;*/
+/*    !*left: 10px;*!*/
+/*}*/
+
 .mapboxgl-popup-content {
     background: #e8e8e8;
     border:2px solid black;
     border-radius: 10px;
     text-align: center;
+    overflow: auto;
+    /*resize: both;*/
 }
 
 h10{
