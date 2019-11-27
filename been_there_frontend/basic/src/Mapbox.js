@@ -23,7 +23,8 @@ export default class Mapbox extends React.Component {
             popupOpened: false,
             newPointClicked: false,
             index: 0,
-            addNewPinpoint: false
+            addNewPinpoint: false,
+            popupLocation: 0
         };
     }
 
@@ -165,14 +166,14 @@ export default class Mapbox extends React.Component {
                 if (component.state.addNewPinpoint == true){
                     map.flyTo({center: e.lngLat});
 
-
                     var coordinates = [];
                     coordinates.push(e.lngLat.lng);
                     coordinates.push(e.lngLat.lat);
 
                     // alert(window.innerHeight);
                     popup.setLngLat(e.lngLat)
-                        .setHTML("<div class='form-group'><h10>Add a new review</h10> <hr/>" +
+                        .setHTML(
+                            "<div class='form-group'><h10>Add a new review</h10> <hr/>" +
                             "<input type='text' id= 'Name' name='Name' placeholder='Title' class='form-control'><br>\n" +
                             "<textarea id= 'Review' name='Review' name='textarea' rows='4' class='form-control' placeholder='Review'></textarea><hr/>" +
                             "<label>Rating(0-5)</label>" +
@@ -192,7 +193,11 @@ export default class Mapbox extends React.Component {
                         .addTo(map);
                 }
             }
-
+            document.getElementById("Name").addEventListener('click', function (e) {
+                // document.getElementById("Name").blur();
+                // document.getElementById("Name").disabled = 'false';
+                e.preventDefault();
+            })
             if (document.getElementById('closeButton') != null){
                 document.getElementById('closeButton').onclick = function cancelClicked(){popup.remove()};
             }if (document.getElementById('saveButton') != null){
