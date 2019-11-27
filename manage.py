@@ -7,11 +7,11 @@ import sys
 def main():
 
     # Please fill in the PostgreSQL database informations
-    os.environ['DB_NAME'] = ''
-    os.environ['DB_USER'] = ''
-    os.environ['DB_PASSWORD'] = ''
-    os.environ['DB_HOST'] = ''
-    os.environ['DB_PORT'] = ''
+    os.environ['DB_NAME'] = 'postgres'
+    os.environ['DB_USER'] = 'BTMaster'
+    os.environ['DB_PASSWORD'] = 's5KHqmt4HGYtp5Ft'
+    os.environ['DB_HOST'] = 'been-there.ciihojrwzxfz.eu-west-3.rds.amazonaws.com'
+    os.environ['DB_PORT'] = '5445'
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'been_there_backend.settings')
     try:

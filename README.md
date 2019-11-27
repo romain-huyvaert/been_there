@@ -9,7 +9,16 @@ First clone the repository :
 git clone https://github.com/romain-huyvaert/been_there.git
 ```
 
-Once it is cloned go inside the folder and apply migrations :
+Then fill in the database credentials in the manage.py :
+```
+    os.environ['DB_NAME'] = ''
+    os.environ['DB_USER'] = ''
+    os.environ['DB_PASSWORD'] = ''
+    os.environ['DB_HOST'] = ''
+    os.environ['DB_PORT'] = ''
+```
+
+Once it is cloned & the credentials are filled in go inside the folder and apply migrations :
 ```
 cd been_there/
 python manage.py migrate
