@@ -1,6 +1,6 @@
 from django.urls import include, path
 from rest_framework import routers
-from been_there_backend.restapi.views import UserViews, PinpointViews, ReviewViews, WorldMapViews
+from been_there_backend.restapi.views import UserViews, ReviewViews, WorldMapViews
 
 router = routers.DefaultRouter()
 # router.register(r'users', UserViews)
@@ -14,10 +14,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-
-    # Pinpoint View
-    path('api/pinpoints/', PinpointViews.pinpoint_list),
-    path('api/pinpoints/add/', PinpointViews.insert_pinpoint),
 
     # User View
     path('api/users/', UserViews.user_list),
