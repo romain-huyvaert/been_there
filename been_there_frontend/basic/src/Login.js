@@ -40,7 +40,9 @@ export default class Login extends React.Component {
                         <button className="btn btn-success btn-lg" id='userClick' type="button" onClick={function(){
                             component.setState({continue: true})
                             let user = document.getElementById('userIdInput').value;
-                            component.setState({userIdState: user});
+                            let userId = user.substring(5, 7);
+
+                            component.setState({userIdState: userId});
                             console.log('userIdState: ' + component.state.userIdState);
                         }}>Continue</button>
                 </div>

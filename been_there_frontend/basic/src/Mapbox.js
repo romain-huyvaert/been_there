@@ -243,21 +243,14 @@ export default class Mapbox extends React.Component {
 
                     axios({
                         method: 'post',
-                        url: '/api/pinpoints/add/',
+                        url: '/api/reviews/add/',
                         data: {
+                            name: name,
+                            review: review,
+                            rating: rating,
                             point: coordinates,
+                            userId: component.state.userIdState
                         }
-                    }).then(function () {
-                        axios({
-                            method: 'post',
-                            url: '/api/reviews/add/',
-                            data: {
-                                name: name,
-                                review: review,
-                                rating: rating,
-                                point: coordinates,
-                            }
-                        });
                     });
 
                map.addLayer({
