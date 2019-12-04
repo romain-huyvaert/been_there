@@ -1,4 +1,4 @@
-from ..models import Review, User, Pinpoint
+from ..models import Review, User
 from rest_framework.decorators import api_view
 from django.core.serializers import serialize
 from rest_framework.response import Response
@@ -27,25 +27,15 @@ def review_list(request):
 def insert_review(request):
     """Inserting a review from POST data"""
 
-    request_point = GEOSGeometry('POINT(' + request.data['point'][0] + ' ' + request.data['point'][1] + ')', srid=4326)
-    point = None
-
     title           = request.data['name']
     rating          = request.data['rating']
     text            = request.data['review']
     current_date    = date.today().strftime("%Y-%m-%d")
     current_time    = time.strftime("%H:%M:%S")
     user            = User.objects.get(id=1)
-    searched_points = Pinpoint.objects.all()
+    point = GEOSGeometry('POINT(' + request.data['point'][0] + ' ' + request.data['point'][1] + ')')
 
-    for search_point in searched_points:
-        if search_point.point == request_point:
-            point = search_point
-            break
-
-    # TODO : Remove the for loop and use the regular Pinpoint.objects.filter() function of Django instead
-
-    if title and rating and text and date and time and user and point is not None:
+    if title and rating and text and date and time and user and point:
 
         review_object = Review.objects.create(
             title=title,

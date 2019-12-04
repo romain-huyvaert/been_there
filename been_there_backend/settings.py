@@ -14,6 +14,11 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.environ['DB_NAME'] = 'postgres'
+os.environ['DB_USER'] = 'BTMaster'
+os.environ['DB_PASSWORD'] = 's5KHqmt4HGYtp5Ft'
+os.environ['DB_HOST'] = 'been-there.ciihojrwzxfz.eu-west-3.rds.amazonaws.com'
+os.environ['DB_PORT'] = '5445'
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +30,7 @@ SECRET_KEY = 'q)2y7lhoc-6crml7+zc-(_1gxy!=886d52=9z_0_$+mz$3@y#u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['35.180.211.57', '172.31.21.198']
 
 
 # Application definition

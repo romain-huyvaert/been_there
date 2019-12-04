@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Pinpoint, Review, WorldMap
+from .models import User, Review, WorldMap
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -10,12 +10,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'email', 'name', 'friends']
-
-
-class PinpointSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Pinpoint
-        fields = ['category', 'x', 'y', 'address', 'title', 'owner_id']
 
 
 class ReviewSerializer(serializers.HyperlinkedModelSerializer):
