@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import Mapbox from "./Mapbox";
 import Header from "./Header";
-import logo from './logo512x512.png';
+import './App.css';
 
 export default class Login extends React.Component {
 
@@ -87,6 +87,9 @@ export default class Login extends React.Component {
                         </select><br />
                         <button className="btn btn-default" id='userClick' type="button" onClick={function(){
                             component.setState({continue: true})
+                            let user = document.getElementById('userIdInput').value;
+                            component.setState({userIdState: user});
+                            console.log('userIdState: ' + component.state.userIdState);
                         }}>Continue</button>
                 </div>
                 </div>
