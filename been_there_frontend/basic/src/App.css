@@ -49,6 +49,26 @@ h2 {
     color: white;
 }
 
+#loginDiv{
+    /*background-color: #6b44cc !important;*/
+    margin-top: 100px;
+    text-align: center;
+}
+
+.myImage {
+    width: 300px;
+    height: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;    background-image: url("./logo512x512.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+body{
+    background-color: #6b44cc !important;
+}
+
 #popupDiv{
     width:500px;
     padding: 18px 10px 10px 10px;

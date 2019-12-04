@@ -4,6 +4,7 @@ import mapboxgl from 'mapbox-gl'
 import Data from './data.geojson';
 import './App.css';
 import myImage from './192x192_versie_1.png';
+import axios from 'axios'
 
 // "homepage": "https://alexpost95.github.io/C-CTest/",
 
@@ -24,13 +25,15 @@ export default class Mapbox extends React.Component {
             newPointClicked: false,
             index: 0,
             addNewPinpoint: false,
-            popupLocation: 0
+            popupLocation: 0,
+            userIdState: this.props.user
         };
     }
 
     componentDidMount() {
         const { lng, lat, zoom } = this.state;
         var component = this;
+        component.setState({userIdState: component.props.user});
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
@@ -39,9 +42,12 @@ export default class Mapbox extends React.Component {
             zoom
         });
 
-        document.getElementById('addPinpoint').addEventListener("click", function (e) {
-            component.setState({addNewPinpoint: !component.state.addNewPinpoint});
-        });
+        if (document.getElementById('addPinpoint')){
+            document.getElementById('addPinpoint').addEventListener("click", function (e) {
+                component.setState({addNewPinpoint: !component.state.addNewPinpoint});
+            });
+        }
+
 
         map.on('move', () => {
             const { lng, lat } = map.getCenter();
@@ -61,24 +67,34 @@ export default class Mapbox extends React.Component {
             map.loadImage(myImage, function(error, image) {
                 if (error) throw error;
                 map.addImage('pointer', image);
-                map.addLayer({
-                    id: 'beenThereLocations',
-                    type: 'symbol',
-                    source: {
-                        type: 'geojson',
-                        data: Data,
-                        cluster: true,
-                        clusterMaxZoom: 20,
-                        clusterRadius: 5
-                    },
-                    "layout": {
-                        "icon-image": "pointer",
-                        "icon-size": 0.3,
-                        "icon-allow-overlap": true
-                    }
+
+                let response = axios({
+                    method: 'get',
+                    url: '/api/reviews/',
+                    data: {}
+                }).then(function(response) {
+                    map.addLayer({
+                        id: 'beenThereLocations',
+                        type: 'symbol',
+                        source: {
+                            type: 'geojson',
+                            data: Data,
+                            cluster: true,
+                            clusterMaxZoom: 20,
+                            clusterRadius: 5
+                        },
+                        "layout": {
+                            "icon-image": "pointer",
+                            "icon-size": 0.3,
+                            "icon-allow-overlap": true
+                        }
+                    });
                 });
             });
         });
+
+        console.log("User props: " + component.props.user);
+        console.log("User state: " + component.state.userIdState);
 
         map.on('click', () => {
             let popup = document.getElementById("popupDiv")
@@ -99,12 +115,12 @@ export default class Mapbox extends React.Component {
             let reviewerName = e.features[0].properties.reviewerName;
             let rating = e.features[0].properties.rating;
 
-            if (name != undefined){
+            if (name !== undefined){
                 component.setState({popupOpened: true});
                 popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
                     '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
             }
-            if (e.features[0].properties.first != undefined && e.features[0].properties.second != undefined && e.features[0].properties.third == undefined){
+            if (e.features[0].properties.first !== undefined && e.features[0].properties.second !== undefined && e.features[0].properties.third === undefined){
                 component.setState({popupOpened: true});
                 let firstObject = JSON.parse(e.features[0].properties.first);
                 let secondObject = JSON.parse(e.features[0].properties.second);
@@ -113,7 +129,7 @@ export default class Mapbox extends React.Component {
                     "<hr /><br />" +
                     "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + secondObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + secondObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + secondObject.name + "</h2>" + secondObject.review + "<br />" + '<span class="' + "stars-container stars-" + secondObject.rating * 20 + '">★★★★★</span> </div>'
             }
-            if (e.features[0].properties.third != undefined){
+            if (e.features[0].properties.third !== undefined){
                 component.setState({popupOpened: true});
                 let firstObject = JSON.parse(e.features[0].properties.first);
                 let secondObject = JSON.parse(e.features[0].properties.second);
@@ -136,7 +152,7 @@ export default class Mapbox extends React.Component {
 
             popup.style.display = "block";
 
-            if (e.features[0].properties.name == undefined && e.features[0].properties.second == undefined && e.features[0].properties.third == undefined){
+            if (e.features[0].properties.name === undefined && e.features[0].properties.second === undefined && e.features[0].properties.third === undefined){
                 // popup.innerHTML = 'Cluster clicked';
                 popup.style.display = "none";
 
@@ -165,7 +181,6 @@ export default class Mapbox extends React.Component {
 
                 if (component.state.addNewPinpoint == true){
                     map.flyTo({center: e.lngLat});
-
                     var coordinates = [];
                     coordinates.push(e.lngLat.lng);
                     coordinates.push(e.lngLat.lat);
@@ -193,25 +208,59 @@ export default class Mapbox extends React.Component {
                         .addTo(map);
                 }
             }
-            document.getElementById("Name").addEventListener('click', function (e) {
-                // document.getElementById("Name").blur();
-                // document.getElementById("Name").disabled = 'false';
-                e.preventDefault();
-            })
+            if (document.getElementById("Name")){
+                document.getElementById("Name").addEventListener('click', function (e) {
+                    // document.getElementById("Name").blur();
+                    // document.getElementById("Name").disabled = 'false';
+                    e.preventDefault();
+                })
+            }
+
             if (document.getElementById('closeButton') != null){
                 document.getElementById('closeButton').onclick = function cancelClicked(){popup.remove()};
             }if (document.getElementById('saveButton') != null){
                 document.getElementById('saveButton').onclick = function saveClicked(e){
-                    var name = document.getElementById('Name').value;
-                    var review = document.getElementById('Review').value;
-                    var rating = document.getElementById('Rating').value;
-                    var lng = document.getElementById('lng').value;
-                    var lat = document.getElementById('lat').value;
+                    var name, rating, review, lng, lat;
+
+                    if (document.getElementById('Name')){
+                        name = document.getElementById('Name').value;
+                    }
+                    if (document.getElementById('Review')){
+                        review = document.getElementById('Review').value;
+                    }
+                    if (document.getElementById('Rating')){
+                        rating = document.getElementById('Rating').value;
+                    }
+                    if (document.getElementById('lng')){
+                        lng = document.getElementById('lng').value;
+                    }
+                    if (document.getElementById('lat')){
+                        lat = document.getElementById('lat').value;
+                    }
                     var coordinates = [];
                     coordinates.push(lng, lat);
                     var layerId = "newPoint"+component.state.index++;
 
-                    map.addLayer({
+                    axios({
+                        method: 'post',
+                        url: '/api/pinpoints/add/',
+                        data: {
+                            point: coordinates,
+                        }
+                    }).then(function () {
+                        axios({
+                            method: 'post',
+                            url: '/api/reviews/add/',
+                            data: {
+                                name: name,
+                                review: review,
+                                rating: rating,
+                                point: coordinates,
+                            }
+                        });
+                    });
+
+               map.addLayer({
                         "id": layerId,
                         "type": "symbol",
                         "source": {
@@ -242,7 +291,9 @@ export default class Mapbox extends React.Component {
                     });
                     map.on('click', layerId, function(e){
                         component.setState({newPointClicked: true});
-                        let popup = document.getElementById("popupDiv");
+                        if (document.getElementById("popupDiv")){
+                            let popup = document.getElementById("popupDiv");
+                        }
                         popup.innerHTML = "Review for: " + e.features[0].properties.name + "<br />" + 'Review: ' + e.features[0].properties.review + "<br />" +
                             "Rating: " + e.features[0].properties.rating;
                         popup.style.display = "block";
