@@ -18,11 +18,11 @@ urlpatterns = [
     # User View
     path('api/users/', UserViews.user_list),
 
-
     # Review View
     path('api/reviews/', ReviewViews.review_list),
     path('api/reviews/add/', ReviewViews.insert_review),
-
+    path('api/reviews/user/', ReviewViews.user_reviews),
+    path('api/reviews/friends/', ReviewViews.friends_reviews),
 
     # Worldmap View
     path('api/worldmap/', WorldMapViews.worldmap_list),

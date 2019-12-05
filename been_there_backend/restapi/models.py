@@ -11,7 +11,7 @@ class User(models.Model):
     username = models.CharField(null=False, max_length=50)
     email = models.EmailField(null=False, unique=True)
     name = models.CharField(null=False, max_length=100)
-    friends = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+    friends = models.TextField(null=True)
 
 """
 Class Review : Review and Pinpoint merged in one table, request on click or all data ?
