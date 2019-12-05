@@ -23,6 +23,8 @@ urlpatterns = [
     path('api/reviews/add/', ReviewViews.insert_review),
     path('api/reviews/user/', ReviewViews.user_reviews),
     path('api/reviews/friends/', ReviewViews.friends_reviews),
+    path('api/reviews/update/', ReviewViews.update_review),
+    path('api/reviews/delete/', ReviewViews.delete_review),
 
     # Worldmap View
     path('api/worldmap/', WorldMapViews.worldmap_list),

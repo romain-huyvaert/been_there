@@ -32,8 +32,8 @@ def insert_review(request):
     text            = request.data['review']
     current_date    = date.today().strftime("%Y-%m-%d")
     current_time    = time.strftime("%H:%M:%S")
-    user            = User.objects.get(id=1)
-    point = GEOSGeometry('POINT(' + request.data['point'][0] + ' ' + request.data['point'][1] + ')')
+    user            = User.objects.get(id=request.data['userId'])
+    point           = GEOSGeometry('POINT(' + request.data['point'][0] + ' ' + request.data['point'][1] + ')')
 
     if title and rating and text and date and time and user and point:
 
@@ -83,5 +83,51 @@ def friends_reviews(request):
                       geometry_field='point',
                       fields=('user_id', 'title', 'rating', 'text', 'date', 'time', 'user')),
             status=status.HTTP_200_OK)
+
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def delete_review(request):
+    """Delete the given review id"""
+    review_id = request.data['reviewId']
+    user_id = request.data['userId']
+    if review_id and user_id:
+
+        review = Review.objects.get(id=review_id)
+        if review and review.user_id == user_id:
+            review.delete()
+            return Response({}, status=status.HTTP_200_OK)
+
+        else:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def update_review(request):
+    """Update the given review id data"""
+    review_id       = request.data['reviewId']
+    user_id         = request.data['userId']
+    title           = request.data['name']
+    rating          = request.data['rating']
+    text            = request.data['review']
+    point           = request.data['point']
+
+    if title and rating and text and point and review_id and user_id:
+        review = Review.objects.get(id=review_id)
+
+        if review and user_id == review.user_id:
+            review.title    = title
+            review.rating   = rating
+            review.text     = text
+            review.point    = point
+
+            review.save()
+            return Response({}, status=status.HTTP_200_OK)
+
+        else :
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({}, status=status.HTTP_400_BAD_REQUEST)
