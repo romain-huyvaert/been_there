@@ -26,14 +26,25 @@ export default class Mapbox extends React.Component {
             index: 0,
             addNewPinpoint: false,
             popupLocation: 0,
-            userIdState: this.props.user
+            userIdState: this.props.user,
+            jsonData: ""
         };
     }
 
     componentDidMount() {
         const { lng, lat, zoom } = this.state;
-        var component = this;
+        let component = this;
         component.setState({userIdState: component.props.user});
+
+        axios({
+            method: 'get',
+            url: '/api/reviews/',
+            data: {}
+        }).then(function (response) {
+            console.log(response.data);
+            component.setState({jsonData: JSON.stringify(response)});
+            console.log("jsonData: " + component.state.jsonData);
+        });
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
