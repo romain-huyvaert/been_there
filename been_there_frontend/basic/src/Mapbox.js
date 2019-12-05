@@ -2,11 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import Data from './data.geojson';
+import Data2 from './data2.geojson';
+import Data3 from './data3.geojson';
 import './App.css';
 import myImage from './192x192_versie_1.png';
 import axios from 'axios'
-
-// "homepage": "https://alexpost95.github.io/C-CTest/",
 
 var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
@@ -27,7 +27,7 @@ export default class Mapbox extends React.Component {
             addNewPinpoint: false,
             popupLocation: 0,
             userIdState: this.props.user,
-            jsonData: ""
+            jsonData: {}
         };
     }
 
@@ -35,16 +35,6 @@ export default class Mapbox extends React.Component {
         const { lng, lat, zoom } = this.state;
         let component = this;
         component.setState({userIdState: component.props.user});
-
-        axios({
-            method: 'get',
-            url: '/api/reviews/',
-            data: {}
-        }).then(function (response) {
-            console.log(response.data);
-            component.setState({jsonData: JSON.stringify(response)});
-            console.log("jsonData: " + component.state.jsonData);
-        });
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
@@ -58,7 +48,6 @@ export default class Mapbox extends React.Component {
                 component.setState({addNewPinpoint: !component.state.addNewPinpoint});
             });
         }
-
 
         map.on('move', () => {
             const { lng, lat } = map.getCenter();
@@ -89,7 +78,7 @@ export default class Mapbox extends React.Component {
                         type: 'symbol',
                         source: {
                             type: 'geojson',
-                            data: Data,
+                            data: JSON.parse(response.data),
                             cluster: true,
                             clusterMaxZoom: 20,
                             clusterRadius: 5
@@ -118,19 +107,33 @@ export default class Mapbox extends React.Component {
             console.log(e);
             component.setState({pointClicked: true});
             map.flyTo({center: e.features[0].geometry.coordinates});
-            let popup = document.getElementById("popupDiv");
 
+            let popup = document.getElementById("popupDiv");
             let coordinates = e.features[0].geometry.coordinates.slice();
             let name = e.features[0].properties.name;
+            let title = e.features[0].properties.title;
+            let user = e.features[0].properties.user;
+            let text = e.features[0].properties.text;
             let review = e.features[0].properties.review;
             let reviewerName = e.features[0].properties.reviewerName;
             let rating = e.features[0].properties.rating;
 
+            component.setState({popupOpened: true});
+
+            if (title !== undefined){
+                console.log("clicked title: " + title);
+                component.setState({popupOpened: true});
+                popup.style.display = "block";
+
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + user + "  align='left'> <div> <p class='reviewernaam'> " + user + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
+                    '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
+            }
             if (name !== undefined){
                 component.setState({popupOpened: true});
                 popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
                     '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
             }
+
             if (e.features[0].properties.first !== undefined && e.features[0].properties.second !== undefined && e.features[0].properties.third === undefined){
                 component.setState({popupOpened: true});
                 let firstObject = JSON.parse(e.features[0].properties.first);
@@ -165,7 +168,7 @@ export default class Mapbox extends React.Component {
 
             if (e.features[0].properties.name === undefined && e.features[0].properties.second === undefined && e.features[0].properties.third === undefined){
                 // popup.innerHTML = 'Cluster clicked';
-                popup.style.display = "none";
+                // popup.style.display = "none";
 
                 console.log(e.lngLat);
                 map.zoomIn(2);
