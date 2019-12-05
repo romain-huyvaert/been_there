@@ -14,12 +14,31 @@ export default class Login extends React.Component {
         super(props);
         this.state = {
             userIdState: '',
-            continue: false
+            continue: false,
+            users: []
         };
+    }
+
+    componentDidMount() {
+        let component = this;
+        axios({
+            method: 'get',
+            url: '/api/users/',
+            data: {}
+        }).then(function (response) {
+            console.log(response.data);
+            component.setState({users: response.data});
+            console.log("users: " + component.state.users.toString());
+        });
     }
 
     render() {
         let component = this;
+
+        const userList = this.state.users.map( (itm,idx) => {
+            return <option>{itm.username}</option>
+        });
+
         if (!component.state.continue){
             return (
                 <div>
@@ -28,22 +47,16 @@ export default class Login extends React.Component {
 
                     <div className="col-sm-10 form-group-lg" id='loginDiv'>
 
-
                     <div id='loginHeader'>Select user</div><br />
                         <select id='userIdInput' className="form-control form-control-lg">
-                            <option>User 1</option>
-                            <option>User 2</option>
-                            <option>User 3</option>
-                            <option>User 4</option>
-                            <option>User 5</option>
-                        </select><br />
+                            {userList}
+                        </select>
+                        <br />
                         <button className="btn btn-success btn-lg" id='userClick' type="button" onClick={function(){
                             component.setState({continue: true})
-                            let user = document.getElementById('userIdInput').value;
-                            let userId = user.substring(5, 7);
 
-                            component.setState({userIdState: userId});
-                            console.log('userIdState: ' + component.state.userIdState);
+                            let user = document.getElementById('userIdInput').selectedIndex + 1;
+                            component.setState({userIdState: user});
                         }}>Continue</button>
                 </div>
                 </div>
