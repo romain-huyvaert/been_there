@@ -66,7 +66,7 @@ def user_reviews(request):
                       fields=('title', 'rating', 'text', 'date', 'time', 'user')),
             status=status.HTTP_200_OK)
 
-    return Response({}, status=status.HTTP_200_OK)
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -84,4 +84,4 @@ def friends_reviews(request):
                       fields=('user_id', 'title', 'rating', 'text', 'date', 'time', 'user')),
             status=status.HTTP_200_OK)
 
-    return Response({}, status=status.HTTP_200_OK)
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
