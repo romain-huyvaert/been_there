@@ -3,13 +3,9 @@ from .models import User, Review, WorldMap
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    friends = serializers.HyperlinkedModelSerializer(
-        many=True
-    )
-
     class Meta:
         model = User
-        fields = ['username', 'email', 'name', 'friends']
+        fields = ['id', 'username', 'email', 'name', 'friends']
 
 
 class ReviewSerializer(serializers.HyperlinkedModelSerializer):
