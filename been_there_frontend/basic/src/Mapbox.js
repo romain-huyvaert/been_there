@@ -75,8 +75,6 @@ export default class Mapbox extends React.Component {
                 map.addSource('friends', {type: 'geojson', data: JSON.parse(response.data)});
             })
 
-
-
             map.loadImage(myImage, function(error, image) {
                 if (error) throw error;
                 map.addImage('pointer', image);
@@ -102,6 +100,15 @@ export default class Mapbox extends React.Component {
                 });
             });
 
+
+            axios({
+                method: 'post',
+                url: '/api/reviews/user/',
+                data: {'user_id': component.state.userIdState}
+            }).then(function (response) {
+                map.addSource('ownLocations', {type: 'geojson', data: JSON.parse(response.data)});
+            })
+
             map.loadImage(myImage, function(error, image) {
                 if (error) throw error;
 
@@ -113,13 +120,10 @@ export default class Mapbox extends React.Component {
                     map.addLayer({
                         id: 'beenThereOwnLocations',
                         type: 'symbol',
-                        source: {
-                            type: 'geojson',
-                            data: JSON.parse(response.data),
-                            cluster: true,
-                            clusterMaxZoom: 20,
-                            clusterRadius: 5
-                        },
+                        source: 'ownLocations',
+                        cluster: true,
+                        clusterMaxZoom: 20,
+                        clusterRadius: 5,
                         "layout": {
                             "icon-image": "ownLocationPointer",
                             "icon-size": 0.05,
@@ -241,6 +245,8 @@ export default class Mapbox extends React.Component {
             let user = e.features[0].properties.user;
             let text = e.features[0].properties.text;
             let rating = e.features[0].properties.rating;
+            let rewiewId = e.features[0].properties.pk;
+            console.log("reviewId: " + rewiewId);
 
             component.setState({popupOpened: true});
 
@@ -249,10 +255,41 @@ export default class Mapbox extends React.Component {
                 component.setState({popupOpened: true});
                 popup.style.display = "block";
 
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + user + "  align='left'> <div> <p class='reviewernaam'> " + "Own review" + user + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + user + "  align='left'> <div> <p class='reviewernaam'> " + "Own review" + user + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span>' + "<br /><button class='btn btn-primary' style='border-radius: 5px' id='removeButton' type='button'>Remove</button>" +
                     '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
             }
 
+            if (document.getElementById('removeButton') != null) {
+                document.getElementById('removeButton').onclick = function saveClicked(e) {
+                    axios({
+                        method: 'post',
+                        url: '/api/reviews/delete/',
+                        data: {'userId': component.state.userIdState, 'reviewId': rewiewId}
+                    }).then(function (response) {
+                        // map.getSource('ownLocations').setData(JSON.parse(response.data));
+                        console.log("Deleted review with id: " + rewiewId + ", " + response);
+                        axios({
+                            method: 'post',
+                            url: '/api/reviews/user/',
+                            data: {'user_id': component.state.userIdState}
+                        }).then(function (response) {
+                            map.getSource('ownLocations').setData(JSON.parse(response.data));
+                            popup.style.display = "none";
+
+                            console.log("updated own data: " + response.data);
+                        });
+                    });
+
+                    // axios({
+                    //     method: 'post',
+                    //     url: '/api/reviews/user/',
+                    //     data: {'user_id': component.state.userIdState}
+                    // }).then(function (response) {
+                    //     map.getSource('ownLocations').setData(JSON.parse(response.data));
+                    //     console.log("updated friends data: " + response.data);
+                    // });
+                }
+            }
             if (document.getElementById("popupCloseButton") !== null) {
                 document.getElementById("popupCloseButton").addEventListener("click", function (e) {
                     popup.style.display = "none";
