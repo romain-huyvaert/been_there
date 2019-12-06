@@ -6,12 +6,14 @@ import Data2 from './data2.geojson';
 import Data3 from './data3.geojson';
 import './App.css';
 import myImage from './192x192_versie_1.png';
+import pinpointSelf from './pinpoint_self.png';
 import axios from 'axios'
 
 var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleHBvc3QiLCJhIjoiY2p2MmdmcHV2MHl0YTQ5cWN6bWR6Zm5jaiJ9.glKqi6Jo4dp4esW7k_CBFA';
 
+// content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
 export default class Mapbox extends React.Component {
 
     constructor(props) {
@@ -63,18 +65,21 @@ export default class Mapbox extends React.Component {
             map.loadImage('https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png', function(error, image){
                 map.addImage('newLocationPointer', image);
             });
+            map.loadImage(pinpointSelf, function(error, image){
+                map.addImage('ownLocationPointer', image);
+            });
 
             map.loadImage(myImage, function(error, image) {
                 if (error) throw error;
                 map.addImage('pointer', image);
 
                 let response = axios({
-                    method: 'get',
-                    url: '/api/reviews/',
-                    data: {}
+                    method: 'post',
+                    url: '/api/reviews/friends/',
+                    data: {'user_id': component.state.userIdState}
                 }).then(function(response) {
                     map.addLayer({
-                        id: 'beenThereLocations',
+                        id: 'beenThereFriendsLocations',
                         type: 'symbol',
                         source: {
                             type: 'geojson',
@@ -86,6 +91,33 @@ export default class Mapbox extends React.Component {
                         "layout": {
                             "icon-image": "pointer",
                             "icon-size": 0.3,
+                            "icon-allow-overlap": true
+                        }
+                    });
+                });
+            });
+
+            map.loadImage(myImage, function(error, image) {
+                if (error) throw error;
+
+                let response = axios({
+                    method: 'post',
+                    url: '/api/reviews/user/',
+                    data: {'user_id': component.state.userIdState}
+                }).then(function(response) {
+                    map.addLayer({
+                        id: 'beenThereOwnLocations',
+                        type: 'symbol',
+                        source: {
+                            type: 'geojson',
+                            data: JSON.parse(response.data),
+                            cluster: true,
+                            clusterMaxZoom: 20,
+                            clusterRadius: 5
+                        },
+                        "layout": {
+                            "icon-image": "ownLocationPointer",
+                            "icon-size": 0.05,
                             "icon-allow-overlap": true
                         }
                     });
@@ -103,7 +135,7 @@ export default class Mapbox extends React.Component {
             component.setState({popupOpened: false});
         });
 
-        map.on('click', 'beenThereLocations', (e) => {
+        map.on('click', 'beenThereFriendsLocations', (e) => {
             console.log(e);
             component.setState({pointClicked: true});
             map.flyTo({center: e.features[0].geometry.coordinates});
@@ -187,17 +219,54 @@ export default class Mapbox extends React.Component {
             }
         });
 
+        map.on('click', 'beenThereOwnLocations', (e) => {
+            console.log(e);
+            component.setState({pointClicked: true});
+            map.flyTo({center: e.features[0].geometry.coordinates});
+
+            let popup = document.getElementById("popupDiv");
+            let coordinates = e.features[0].geometry.coordinates.slice();
+            let name = e.features[0].properties.name;
+            let title = e.features[0].properties.title;
+            let user = e.features[0].properties.user;
+            let text = e.features[0].properties.text;
+            let rating = e.features[0].properties.rating;
+
+            component.setState({popupOpened: true});
+
+            if (title !== undefined){
+                console.log("clicked title: " + title);
+                component.setState({popupOpened: true});
+                popup.style.display = "block";
+
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + user + "  align='left'> <div> <p class='reviewernaam'> " + "Own review" + user + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
+                    '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
+            }
+
+            if (document.getElementById("popupCloseButton") !== null) {
+                document.getElementById("popupCloseButton").addEventListener("click", function (e) {
+                    popup.style.display = "none";
+                });
+            }
+
+            e.preventDefault();
+
+            popup.style.display = "block";
+
+            if (e.features[0].properties.title === undefined){
+                // popup.innerHTML = 'Cluster clicked';
+                popup.style.display = "none";
+
+                console.log(e.lngLat);
+                map.zoomIn(2);
+                var zoom = map.getZoom();
+                map.flyTo({center: e.lngLat, zoom: 10});
+            }
+        });
+
         var popup = new mapboxgl.Popup({
             closeButton: false,
             // closeOnClick: false
-        });
-
-        map.on('mouseenter', 'beenThereLocations', () => {
-            map.getCanvas().style.cursor = 'pointer';
-        });
-
-        map.on('mouseleave', 'beenThereLocations', () => {
-            map.getCanvas().style.cursor = '';
         });
 
         map.on('click', function(e) {
