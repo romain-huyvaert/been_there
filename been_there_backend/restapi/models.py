@@ -8,7 +8,7 @@ Custom user model that takes differents fields in consideration
 for the needs of the project.
 """
 class User(models.Model):
-    username = models.CharField(null=False, max_length=50)
+    username = models.CharField(null=False, max_length=50, unique=True)
     email = models.EmailField(null=False, unique=True)
     name = models.CharField(null=False, max_length=100)
     friends = models.TextField(null=True)
@@ -22,7 +22,8 @@ class Review(models.Model):
     text        = models.CharField(max_length=500)
     date        = models.DateField(null=False)
     time        = models.TimeField(null=False)
-    user        = models.ForeignKey(User, on_delete=models.CASCADE)
+    user        = models.ForeignKey(User, related_name='fk_user', on_delete=models.CASCADE)
+    username    = models.ForeignKey(User, to_field='username', related_name='fk_username', on_delete=models.CASCADE)
     point       = gis_models.PointField(null=False, spatial_index=True, geography=True)
     #TODO picture storage
 
