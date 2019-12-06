@@ -28,6 +28,7 @@
     "mapbox-gl": "^1.5.0",
     "react": "^15.5.0",
     "react-bootstrap": "^1.0.0-beta.16",
-    "react-dom": "^15.5.0"
+    "react-dom": "^15.5.0",
+    "write-file-p": "^1.0.7"
   }
 }

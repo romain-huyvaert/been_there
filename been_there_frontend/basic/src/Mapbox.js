@@ -166,9 +166,19 @@ export default class Mapbox extends React.Component {
 
             popup.style.display = "block";
 
-            if (e.features[0].properties.name === undefined && e.features[0].properties.second === undefined && e.features[0].properties.third === undefined){
+            // if (e.features[0].properties.name === undefined && e.features[0].properties.second === undefined && e.features[0].properties.third === undefined){
+            //     // popup.innerHTML = 'Cluster clicked';
+            //     // popup.style.display = "none";
+            //
+            //     console.log(e.lngLat);
+            //     map.zoomIn(2);
+            //     var zoom = map.getZoom();
+            //     map.flyTo({center: e.lngLat, zoom: 10});
+            // }
+
+            if (e.features[0].properties.title === undefined){
                 // popup.innerHTML = 'Cluster clicked';
-                // popup.style.display = "none";
+                popup.style.display = "none";
 
                 console.log(e.lngLat);
                 map.zoomIn(2);
