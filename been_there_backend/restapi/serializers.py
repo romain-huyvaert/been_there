@@ -11,7 +11,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class ReviewSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Review
-        fields = ['rating', 'text', 'date', 'time', 'pinpoint_id']
+        fields = ['id', 'rating', 'text', 'date', 'time', 'pinpoint_id']
 
 
 class WorldMapSerializer(serializers.HyperlinkedModelSerializer):

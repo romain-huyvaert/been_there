@@ -16,8 +16,7 @@ def review_list(request):
         return Response(
             serialize('geojson',
                       reviews,
-                      geometry_field='point',
-                      fields=('title', 'rating', 'text', 'date', 'time', 'user')),
+                      geometry_field='point'),
             status=status.HTTP_200_OK)
 
     return Response({}, status=status.HTTP_200_OK)
@@ -62,8 +61,7 @@ def user_reviews(request):
         return Response(
             serialize('geojson',
                       reviews,
-                      geometry_field='point',
-                      fields=('title', 'rating', 'text', 'date', 'time', 'user')),
+                      geometry_field='point'),
             status=status.HTTP_200_OK)
 
     return Response({}, status=status.HTTP_400_BAD_REQUEST)
@@ -80,8 +78,7 @@ def friends_reviews(request):
         return Response(
             serialize('geojson',
                       reviews,
-                      geometry_field='point',
-                      fields=('user_id', 'title', 'rating', 'text', 'date', 'time', 'user')),
+                      geometry_field='point'),
             status=status.HTTP_200_OK)
 
     return Response({}, status=status.HTTP_400_BAD_REQUEST)

@@ -30,7 +30,7 @@ SECRET_KEY = 'q)2y7lhoc-6crml7+zc-(_1gxy!=886d52=9z_0_$+mz$3@y#u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['35.180.211.57', '172.31.21.198', 'localhost']
+ALLOWED_HOSTS = ['35.180.211.57', '172.31.21.198', 'localhost', 'awesome-hugle-5edc0c.netlify.com', '167.99.137.12']
 
 
 # Application definition
