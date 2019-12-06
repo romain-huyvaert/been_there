@@ -1,9 +1,8 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
-import Data from './data.geojson';
-import Data2 from './data2.geojson';
-import Data3 from './data3.geojson';
+// import Data from './data.geojson';
+// import Data2 from './data2.geojson';
+// import Data3 from './data3.geojson';
 import './App.css';
 import myImage from './192x192_versie_1.png';
 import pinpointSelf from './pinpoint_self.png';
@@ -13,7 +12,6 @@ var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleHBvc3QiLCJhIjoiY2p2MmdmcHV2MHl0YTQ5cWN6bWR6Zm5jaiJ9.glKqi6Jo4dp4esW7k_CBFA';
 
-// content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
 export default class Mapbox extends React.Component {
 
     constructor(props) {
@@ -69,11 +67,21 @@ export default class Mapbox extends React.Component {
                 map.addImage('ownLocationPointer', image);
             });
 
+            axios({
+                method: 'post',
+                url: '/api/reviews/friends/',
+                data: {'user_id': component.state.userIdState}
+            }).then(function (response) {
+                map.addSource('friends', {type: 'geojson', data: JSON.parse(response.data)});
+            })
+
+
+
             map.loadImage(myImage, function(error, image) {
                 if (error) throw error;
                 map.addImage('pointer', image);
 
-                let response = axios({
+                axios({
                     method: 'post',
                     url: '/api/reviews/friends/',
                     data: {'user_id': component.state.userIdState}
@@ -81,13 +89,10 @@ export default class Mapbox extends React.Component {
                     map.addLayer({
                         id: 'beenThereFriendsLocations',
                         type: 'symbol',
-                        source: {
-                            type: 'geojson',
-                            data: JSON.parse(response.data),
-                            cluster: true,
-                            clusterMaxZoom: 20,
-                            clusterRadius: 5
-                        },
+                        source: 'friends',
+                        cluster: true,
+                        clusterMaxZoom: 20,
+                        clusterRadius: 5,
                         "layout": {
                             "icon-image": "pointer",
                             "icon-size": 0.3,
@@ -100,7 +105,7 @@ export default class Mapbox extends React.Component {
             map.loadImage(myImage, function(error, image) {
                 if (error) throw error;
 
-                let response = axios({
+                axios({
                     method: 'post',
                     url: '/api/reviews/user/',
                     data: {'user_id': component.state.userIdState}
@@ -140,8 +145,16 @@ export default class Mapbox extends React.Component {
             component.setState({pointClicked: true});
             map.flyTo({center: e.features[0].geometry.coordinates});
 
+            axios({
+                method: 'post',
+                url: '/api/reviews/friends/',
+                data: {'user_id': component.state.userIdState}
+            }).then(function (response) {
+                map.getSource('friends').setData(JSON.parse(response.data));
+                console.log("updated friends data: " + response.data);
+            });
+
             let popup = document.getElementById("popupDiv");
-            let coordinates = e.features[0].geometry.coordinates.slice();
             let name = e.features[0].properties.name;
             let title = e.features[0].properties.title;
             let user = e.features[0].properties.user;
@@ -214,7 +227,6 @@ export default class Mapbox extends React.Component {
 
                 console.log(e.lngLat);
                 map.zoomIn(2);
-                var zoom = map.getZoom();
                 map.flyTo({center: e.lngLat, zoom: 10});
             }
         });
@@ -225,8 +237,6 @@ export default class Mapbox extends React.Component {
             map.flyTo({center: e.features[0].geometry.coordinates});
 
             let popup = document.getElementById("popupDiv");
-            let coordinates = e.features[0].geometry.coordinates.slice();
-            let name = e.features[0].properties.name;
             let title = e.features[0].properties.title;
             let user = e.features[0].properties.user;
             let text = e.features[0].properties.text;
@@ -259,7 +269,6 @@ export default class Mapbox extends React.Component {
 
                 console.log(e.lngLat);
                 map.zoomIn(2);
-                var zoom = map.getZoom();
                 map.flyTo({center: e.lngLat, zoom: 10});
             }
         });
@@ -272,7 +281,7 @@ export default class Mapbox extends React.Component {
         map.on('click', function(e) {
             if (!component.state.pointClicked && !component.state.popupOpened && !component.state.newPointClicked){
 
-                if (component.state.addNewPinpoint == true){
+                if (component.state.addNewPinpoint === true){
                     map.flyTo({center: e.lngLat});
                     var coordinates = [];
                     coordinates.push(e.lngLat.lng);
@@ -377,9 +386,7 @@ export default class Mapbox extends React.Component {
                     });
                     map.on('click', layerId, function(e){
                         component.setState({newPointClicked: true});
-                        if (document.getElementById("popupDiv")){
-                            let popup = document.getElementById("popupDiv");
-                        }
+
                         popup.innerHTML = "Review for: " + e.features[0].properties.name + "<br />" + 'Review: ' + e.features[0].properties.review + "<br />" +
                             "Rating: " + e.features[0].properties.rating;
                         popup.style.display = "block";
@@ -422,7 +429,7 @@ export default class Mapbox extends React.Component {
     }
 
     render() {
-        const { lng, lat, zoom } = this.state;
+        // const { lng, lat, zoom } = this.state;
 
         return (
             <div>

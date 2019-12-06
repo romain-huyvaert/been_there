@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 
 import React from 'react'
-import ReactDOM from 'react-dom'
 
 import axios from 'axios'
 import Mapbox from "./Mapbox";

@@ -1,6 +1,4 @@
 import React from 'react'
-import Mapbox from './Mapbox'
-import Header from './Header';
 import Login from './Login';
 
 
