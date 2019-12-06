@@ -45,6 +45,7 @@ def insert_review(request):
             time=current_time,
             user=user,
             point=point,
+            username=user,
         )
 
         if review_object:
@@ -57,7 +58,7 @@ def insert_review(request):
 @api_view(['POST'])
 def user_reviews(request):
     """Send reviews of the current user"""
-    reviews = Review.objects.filter(user_id=request.data['user_id'])
+    reviews = Review.objects.filter(user_id=request.data['userId'])
     if reviews:
         return Response(
             serialize('geojson',
@@ -72,7 +73,7 @@ def user_reviews(request):
 @api_view(['POST'])
 def friends_reviews(request):
     """Send reviews of the current user's friends"""
-    ids = User.objects.filter(id=request.data['user_id']).values_list('friends')
+    ids = User.objects.filter(id=request.data['userId']).values_list('friends')
     list_ids = [int(friend_id) for friend_id in ids[0][0].split('-')]
     reviews = Review.objects.filter(user_id__in=list_ids)
 
