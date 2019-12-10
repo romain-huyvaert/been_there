@@ -70,7 +70,7 @@ export default class Mapbox extends React.Component {
             axios({
                 method: 'post',
                 url: '/api/reviews/friends/',
-                data: {'user_id': component.state.userIdState}
+                data: {'userId': component.state.userIdState}
             }).then(function (response) {
                 map.addSource('friends', {type: 'geojson', data: JSON.parse(response.data)});
                 console.log("Friends layer: " + response.data);
@@ -83,7 +83,7 @@ export default class Mapbox extends React.Component {
                 axios({
                     method: 'post',
                     url: '/api/reviews/friends/',
-                    data: {'user_id': component.state.userIdState}
+                    data: {'userId': component.state.userIdState}
                 }).then(function(response) {
                     map.addLayer({
                         id: 'beenThereFriendsLocations',
@@ -105,7 +105,7 @@ export default class Mapbox extends React.Component {
             axios({
                 method: 'post',
                 url: '/api/reviews/user/',
-                data: {'user_id': component.state.userIdState}
+                data: {'userId': component.state.userIdState}
             }).then(function (response) {
                 map.addSource('ownLocations', {type: 'geojson', data: JSON.parse(response.data)});
                 console.log("ownLocations layer: " + response.data);
@@ -117,7 +117,7 @@ export default class Mapbox extends React.Component {
                 axios({
                     method: 'post',
                     url: '/api/reviews/user/',
-                    data: {'user_id': component.state.userIdState}
+                    data: {'userId': component.state.userIdState}
                 }).then(function(response) {
                     map.addLayer({
                         id: 'beenThereOwnLocations',
@@ -159,7 +159,6 @@ export default class Mapbox extends React.Component {
             //     map.getSource('friends').setData(JSON.parse(response.data));
             //     console.log("updated friends data: " + response.data);
             // });
-
             let popup = document.getElementById("popupDiv");
             let name = e.features[0].properties.name;
             let title = e.features[0].properties.title;
@@ -175,10 +174,13 @@ export default class Mapbox extends React.Component {
             if (title !== undefined){
                 console.log("clicked title: " + title);
                 component.setState({popupOpened: true});
-                popup.style.display = "block";
+                console.log("own point clicked");
 
                 popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + userName + "  align='left'> <div> <p class='reviewernaam'> " + userName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
                     '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
+
+                // popup.style.display = "block";
+
             }
             if (name !== undefined){
                 component.setState({popupOpened: true});
@@ -275,7 +277,7 @@ export default class Mapbox extends React.Component {
                         axios({
                             method: 'post',
                             url: '/api/reviews/user/',
-                            data: {'user_id': component.state.userIdState}
+                            data: {'userId': component.state.userIdState}
                         }).then(function (response) {
                             map.getSource('ownLocations').setData(JSON.parse(response.data));
                             popup.style.display = "none";
@@ -427,9 +429,14 @@ export default class Mapbox extends React.Component {
                     });
                     map.on('click', layerId, function(e){
                         component.setState({newPointClicked: true});
+                        let popup = document.getElementById("popupDiv");
 
                         popup.innerHTML = "Review for: " + e.features[0].properties.name + "<br />" + 'Review: ' + e.features[0].properties.review + "<br />" +
                             "Rating: " + e.features[0].properties.rating;
+
+                        popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" align='left'> <div> <p class='reviewernaam'> " + "Own review </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + e.features[0].properties.name + "</h2>" + e.features[0].properties.review + "<br />" + '<span class="' + "stars-container stars-" + e.features[0].properties.rating * 20 + '">★★★★★</span>' + "<br />" +
+                            '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
+
                         popup.style.display = "block";
                         console.log(map.getLayer(e));
 
