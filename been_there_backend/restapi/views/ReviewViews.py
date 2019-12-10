@@ -114,7 +114,7 @@ def update_review(request):
     title           = request.data['name']
     rating          = request.data['rating']
     text            = request.data['review']
-    point           = request.data['point']
+    point           = GEOSGeometry('POINT(' + request.data['point'][0] + ' ' + request.data['point'][1] + ')')
 
     if title and rating and text and point and review_id and user_id:
         review = Review.objects.get(id=review_id)
