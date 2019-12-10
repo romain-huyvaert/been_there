@@ -73,6 +73,7 @@ export default class Mapbox extends React.Component {
                 data: {'user_id': component.state.userIdState}
             }).then(function (response) {
                 map.addSource('friends', {type: 'geojson', data: JSON.parse(response.data)});
+                console.log("Friends layer: " + response.data);
             })
 
             map.loadImage(myImage, function(error, image) {
@@ -107,6 +108,7 @@ export default class Mapbox extends React.Component {
                 data: {'user_id': component.state.userIdState}
             }).then(function (response) {
                 map.addSource('ownLocations', {type: 'geojson', data: JSON.parse(response.data)});
+                console.log("ownLocations layer: " + response.data);
             })
 
             map.loadImage(myImage, function(error, image) {
@@ -149,19 +151,20 @@ export default class Mapbox extends React.Component {
             component.setState({pointClicked: true});
             map.flyTo({center: e.features[0].geometry.coordinates});
 
-            axios({
-                method: 'post',
-                url: '/api/reviews/friends/',
-                data: {'user_id': component.state.userIdState}
-            }).then(function (response) {
-                map.getSource('friends').setData(JSON.parse(response.data));
-                console.log("updated friends data: " + response.data);
-            });
+            // axios({
+            //     method: 'post',
+            //     url: '/api/reviews/friends/',
+            //     data: {'user_id': component.state.userIdState}
+            // }).then(function (response) {
+            //     map.getSource('friends').setData(JSON.parse(response.data));
+            //     console.log("updated friends data: " + response.data);
+            // });
 
             let popup = document.getElementById("popupDiv");
             let name = e.features[0].properties.name;
             let title = e.features[0].properties.title;
             let user = e.features[0].properties.user;
+            let userName = e.features[0].properties.username;
             let text = e.features[0].properties.text;
             let review = e.features[0].properties.review;
             let reviewerName = e.features[0].properties.reviewerName;
@@ -174,7 +177,7 @@ export default class Mapbox extends React.Component {
                 component.setState({popupOpened: true});
                 popup.style.display = "block";
 
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + user + "  align='left'> <div> <p class='reviewernaam'> " + user + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + userName + "  align='left'> <div> <p class='reviewernaam'> " + userName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
                     '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
             }
             if (name !== undefined){
@@ -246,6 +249,7 @@ export default class Mapbox extends React.Component {
             let text = e.features[0].properties.text;
             let rating = e.features[0].properties.rating;
             let rewiewId = e.features[0].properties.pk;
+
             console.log("reviewId: " + rewiewId);
 
             component.setState({popupOpened: true});
@@ -460,9 +464,6 @@ export default class Mapbox extends React.Component {
 
         map.addControl(geoControl, 'top-right');
 
-        // https://github.com/mapbox/mapbox-gl-draw#usage-in-your-application
-        // var Draw = new MapboxDraw();
-        // map.addControl(Draw, 'top-right');
     }
 
     render() {
