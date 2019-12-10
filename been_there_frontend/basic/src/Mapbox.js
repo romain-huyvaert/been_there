@@ -27,7 +27,8 @@ export default class Mapbox extends React.Component {
             addNewPinpoint: false,
             popupLocation: 0,
             userIdState: this.props.user,
-            jsonData: {}
+            jsonData: {},
+            clickedCoordinates: []
         };
     }
 
@@ -151,14 +152,6 @@ export default class Mapbox extends React.Component {
             component.setState({pointClicked: true});
             map.flyTo({center: e.features[0].geometry.coordinates});
 
-            // axios({
-            //     method: 'post',
-            //     url: '/api/reviews/friends/',
-            //     data: {'user_id': component.state.userIdState}
-            // }).then(function (response) {
-            //     map.getSource('friends').setData(JSON.parse(response.data));
-            //     console.log("updated friends data: " + response.data);
-            // });
             let popup = document.getElementById("popupDiv");
             let name = e.features[0].properties.name;
             let title = e.features[0].properties.title;
@@ -182,120 +175,7 @@ export default class Mapbox extends React.Component {
                 // popup.style.display = "block";
 
             }
-            if (name !== undefined){
-                component.setState({popupOpened: true});
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
-                    '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
-            }
 
-            if (e.features[0].properties.first !== undefined && e.features[0].properties.second !== undefined && e.features[0].properties.third === undefined){
-                component.setState({popupOpened: true});
-                let firstObject = JSON.parse(e.features[0].properties.first);
-                let secondObject = JSON.parse(e.features[0].properties.second);
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + firstObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + firstObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + firstObject.name + "</h2>" + firstObject.review + "<br />" + '<span class="' + "stars-container stars-" + firstObject.rating * 20 + '">★★★★★</span> </div>' +
-                    '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>' +
-                    "<hr /><br />" +
-                    "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + secondObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + secondObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + secondObject.name + "</h2>" + secondObject.review + "<br />" + '<span class="' + "stars-container stars-" + secondObject.rating * 20 + '">★★★★★</span> </div>'
-            }
-            if (e.features[0].properties.third !== undefined){
-                component.setState({popupOpened: true});
-                let firstObject = JSON.parse(e.features[0].properties.first);
-                let secondObject = JSON.parse(e.features[0].properties.second);
-                let thirdObject = JSON.parse(e.features[0].properties.third);
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + firstObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + firstObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + firstObject.name + "</h2>" + firstObject.review + "<br />" + '<span class="' + "stars-container stars-" + firstObject.rating * 20 + '">★★★★★</span> </div>' +
-                    '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>' +
-                    "<hr /><br />" +
-                    "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + secondObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + secondObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + secondObject.name + "</h2>" + secondObject.review + "<br />" + '<span class="' + "stars-container stars-" + secondObject.rating * 20 + '">★★★★★</span> </div>' +
-                    "<hr /><br />" +
-                    "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + thirdObject.reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + thirdObject.reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + thirdObject.name + "</h2>" + thirdObject.review + "<br />" + '<span class="' + "stars-container stars-" + thirdObject.rating * 20 + '">★★★★★</span> </div>'
-            }
-
-            if (document.getElementById("popupCloseButton") !== null) {
-                document.getElementById("popupCloseButton").addEventListener("click", function (e) {
-                    popup.style.display = "none";
-                });
-            }
-
-            e.preventDefault();
-
-            popup.style.display = "block";
-
-            // if (e.features[0].properties.name === undefined && e.features[0].properties.second === undefined && e.features[0].properties.third === undefined){
-            //     // popup.innerHTML = 'Cluster clicked';
-            //     // popup.style.display = "none";
-            //
-            //     console.log(e.lngLat);
-            //     map.zoomIn(2);
-            //     var zoom = map.getZoom();
-            //     map.flyTo({center: e.lngLat, zoom: 10});
-            // }
-
-            if (e.features[0].properties.title === undefined){
-                // popup.innerHTML = 'Cluster clicked';
-                popup.style.display = "none";
-
-                console.log(e.lngLat);
-                map.zoomIn(2);
-                map.flyTo({center: e.lngLat, zoom: 10});
-            }
-        });
-
-        map.on('click', 'beenThereOwnLocations', (e) => {
-            console.log(e);
-            component.setState({pointClicked: true});
-            map.flyTo({center: e.features[0].geometry.coordinates});
-
-            let popup = document.getElementById("popupDiv");
-            let title = e.features[0].properties.title;
-            let user = e.features[0].properties.user;
-            let text = e.features[0].properties.text;
-            let rating = e.features[0].properties.rating;
-            let rewiewId = e.features[0].properties.pk;
-
-            console.log("reviewId: " + rewiewId);
-
-            component.setState({popupOpened: true});
-
-            if (title !== undefined){
-                console.log("clicked title: " + title);
-                component.setState({popupOpened: true});
-                popup.style.display = "block";
-
-                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + user + "  align='left'> <div> <p class='reviewernaam'> " + "Own review" + user + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span>' + "<br /><button class='btn btn-primary' style='border-radius: 5px' id='removeButton' type='button'>Remove</button>" +
-                    '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
-            }
-
-            if (document.getElementById('removeButton') != null) {
-                document.getElementById('removeButton').onclick = function saveClicked(e) {
-                    axios({
-                        method: 'post',
-                        url: '/api/reviews/delete/',
-                        data: {'userId': component.state.userIdState, 'reviewId': rewiewId}
-                    }).then(function (response) {
-                        // map.getSource('ownLocations').setData(JSON.parse(response.data));
-                        console.log("Deleted review with id: " + rewiewId + ", " + response);
-                        axios({
-                            method: 'post',
-                            url: '/api/reviews/user/',
-                            data: {'userId': component.state.userIdState}
-                        }).then(function (response) {
-                            map.getSource('ownLocations').setData(JSON.parse(response.data));
-                            popup.style.display = "none";
-
-                            console.log("updated own data: " + response.data);
-                        });
-                    });
-
-                    // axios({
-                    //     method: 'post',
-                    //     url: '/api/reviews/user/',
-                    //     data: {'user_id': component.state.userIdState}
-                    // }).then(function (response) {
-                    //     map.getSource('ownLocations').setData(JSON.parse(response.data));
-                    //     console.log("updated friends data: " + response.data);
-                    // });
-                }
-            }
             if (document.getElementById("popupCloseButton") !== null) {
                 document.getElementById("popupCloseButton").addEventListener("click", function (e) {
                     popup.style.display = "none";
@@ -319,6 +199,158 @@ export default class Mapbox extends React.Component {
         var popup = new mapboxgl.Popup({
             closeButton: false,
             // closeOnClick: false
+        });
+
+        var editPopup = new mapboxgl.Popup({
+            closeButton: false,
+            // closeOnClick: false
+        });
+
+        map.on('click', 'beenThereOwnLocations', (e) => {
+            console.log(e);
+            component.setState({pointClicked: true});
+            map.flyTo({center: e.features[0].geometry.coordinates});
+
+            let popup = document.getElementById("popupDiv");
+            let title = e.features[0].properties.title;
+            let user = e.features[0].properties.user;
+            let text = e.features[0].properties.text;
+            let rating = e.features[0].properties.rating;
+            let rewiewId = e.features[0].properties.pk;
+            component.setState({tempCoordinates: [e.lngLat.lng.toString(), e.lngLat.lat.toString()]});
+
+            console.log("reviewId: " + rewiewId);
+
+            component.setState({popupOpened: true});
+
+            if (title !== undefined){
+                console.log("clicked title: " + title);
+                component.setState({popupOpened: true});
+                popup.style.display = "block";
+
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + user + "  align='left'> <div> <p class='reviewernaam'> " + "Own review" + user + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span>' + "<br /><button class='btn btn-primary' style='border-radius: 5px' id='removeButton' type='button'>Remove</button> <button class='btn btn-success' style='border-radius: 5px' id='editButton' type='button'>Edit</button>" +
+                    '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
+            }
+
+            if (document.getElementById('removeButton') != null) {
+                document.getElementById('removeButton').onclick = function saveClicked(e) {
+                    axios({
+                        method: 'post',
+                        url: '/api/reviews/delete/',
+                        data: {'userId': component.state.userIdState, 'reviewId': rewiewId}
+                    }).then(function (response) {
+                        // map.getSource('ownLocations').setData(JSON.parse(response.data));
+                        console.log("Deleted review with id: " + rewiewId + ", " + response);
+                        axios({
+                            method: 'post',
+                            url: '/api/reviews/user/',
+                            data: {'userId': component.state.userIdState}
+                        }).then(function (response) {
+                            map.getSource('ownLocations').setData(JSON.parse(response.data));
+                            popup.style.display = "none";
+
+                            console.log("updated own data: " + response.data);
+                        });
+                    });
+                }
+            }
+            if (document.getElementById('editButton') != null) {
+                document.getElementById('editButton').onclick = function editClicked(e) {
+
+                    editPopup.setLngLat(component.state.tempCoordinates)
+                        .setHTML(
+                            "<div class='form-group'><h10>Edit review</h10> <hr/>" +
+                            "<input type='text' id='Name' name='Name' value="+title+" placeholder=" + title + " class='form-control'><br>\n" +
+                            "<textarea id= 'Review' name='Review' name='textarea' rows='4' class='form-control' placeholder=" + text + ">"+text+"</textarea><hr/>" +
+                            "<label>Rating(0-5)</label>" +
+                            "<select value=4 class='form-control' id='Rating'>" +
+                            "<option>0</option>\n" +
+                            "<option>1</option>\n" +
+                            "<option>2</option>\n" +
+                            "<option>3</option>\n" +
+                            "<option>4</option>\n" +
+                            "<option>5</option>" +
+                            "</select><br />" +
+                            // "<input type='datetime-local'>" +
+                            "<button class='btn btn-primary' style='border-radius: 5px' id='saveButton' type='button'>Save</button>" + "  " + "<button class='btn btn-danger' style='border-radius: 5px' id='closeButton' type='button'>Cancel</button>" +
+                            "<input type='hidden' id= 'lng' name='lng' value=" + component.state.tempCoordinates[0] + "><br>" +
+                            "<input type='hidden' id= 'lat' name='lat' value=" + component.state.tempCoordinates[0] + " class='btn'></div>"
+                        )
+                        .addTo(map);
+                    document.getElementById('Rating').value = rating;
+
+                    if (document.getElementById('saveButton') != null) {
+                        document.getElementById('saveButton').onclick = function saveClicked(e) {
+                            var name, rating, review, lng, lat;
+
+                            if (document.getElementById('Name')) {
+                                name = document.getElementById('Name').value;
+                            }
+                            if (document.getElementById('Review')) {
+                                review = document.getElementById('Review').value;
+                            }
+                            if (document.getElementById('Rating')) {
+                                rating = document.getElementById('Rating').value;
+                            }
+                            if (document.getElementById('lng')) {
+                                lng = document.getElementById('lng').value;
+                            }
+                            if (document.getElementById('lat')) {
+                                lat = document.getElementById('lat').value;
+                            }
+
+                            var layerId = "newPoint" + component.state.index++;
+
+                            axios({
+                                method: 'post',
+                                url: '/api/reviews/update/',
+                                data: {
+                                    reviewId: rewiewId,
+                                    userId: component.state.userIdState,
+                                    name: name,
+                                    rating: rating,
+                                    review: review,
+                                    point: component.state.tempCoordinates,
+                                }
+                            }).then(function (response) {
+                                axios({
+                                    method: 'post',
+                                    url: '/api/reviews/user/',
+                                    data: {'userId': component.state.userIdState}
+                                }).then(function (response) {
+                                    map.getSource('ownLocations').setData(JSON.parse(response.data));
+                                    // popup.style.display = "none";
+
+                                    console.log("updated own data: " + response.data);
+                                });
+                            }).then(function (response) {
+                                alert("Review updated");
+                                editPopup.remove();
+                                popup.style.display = "none";
+                            });
+
+                        }
+                    }
+                }
+            }
+            if (document.getElementById("popupCloseButton") !== null) {
+                document.getElementById("popupCloseButton").addEventListener("click", function (e) {
+                    popup.style.display = "none";
+                });
+            }
+
+            e.preventDefault();
+
+            popup.style.display = "block";
+
+            if (e.features[0].properties.title === undefined){
+                // popup.innerHTML = 'Cluster clicked';
+                popup.style.display = "none";
+
+                console.log(e.lngLat);
+                map.zoomIn(2);
+                map.flyTo({center: e.lngLat, zoom: 10});
+            }
         });
 
         map.on('click', function(e) {
@@ -363,28 +395,29 @@ export default class Mapbox extends React.Component {
 
             if (document.getElementById('closeButton') != null){
                 document.getElementById('closeButton').onclick = function cancelClicked(){popup.remove()};
-            }if (document.getElementById('saveButton') != null){
-                document.getElementById('saveButton').onclick = function saveClicked(e){
+            }
+            if (document.getElementById('saveButton') != null) {
+                document.getElementById('saveButton').onclick = function saveClicked(e) {
                     var name, rating, review, lng, lat;
 
-                    if (document.getElementById('Name')){
+                    if (document.getElementById('Name')) {
                         name = document.getElementById('Name').value;
                     }
-                    if (document.getElementById('Review')){
+                    if (document.getElementById('Review')) {
                         review = document.getElementById('Review').value;
                     }
-                    if (document.getElementById('Rating')){
+                    if (document.getElementById('Rating')) {
                         rating = document.getElementById('Rating').value;
                     }
-                    if (document.getElementById('lng')){
+                    if (document.getElementById('lng')) {
                         lng = document.getElementById('lng').value;
                     }
-                    if (document.getElementById('lat')){
+                    if (document.getElementById('lat')) {
                         lat = document.getElementById('lat').value;
                     }
                     var coordinates = [];
                     coordinates.push(lng, lat);
-                    var layerId = "newPoint"+component.state.index++;
+                    var layerId = "newPoint" + component.state.index++;
 
                     axios({
                         method: 'post',
@@ -396,54 +429,77 @@ export default class Mapbox extends React.Component {
                             point: coordinates,
                             userId: component.state.userIdState
                         }
+                    }).then(function (response) {
+                        axios({
+                            method: 'post',
+                            url: '/api/reviews/user/',
+                            data: {'userId': component.state.userIdState}
+                        }).then(function (response) {
+                            map.getSource('ownLocations').setData(JSON.parse(response.data));
+                            // popup.style.display = "none";
+
+                            console.log("updated own data: " + response.data);
+                        });
                     });
 
-               map.addLayer({
-                        "id": layerId,
-                        "type": "symbol",
-                        "source": {
-                            "type": "geojson",
-                            "data": {
-                                "type": "FeatureCollection",
-                                "features": [{
-                                    "type": "Feature",
-                                    "properties": {
-                                        "name": name,
-                                        "rating": rating,
-                                        "review": review,
-                                        "reviewer": '123456',
-                                        "reviewerName": 'random dude',
-                                        "icon": "rocket"
-                                    },
-                                    "geometry": {
-                                        "type": "Point",
-                                        "coordinates": coordinates
-                                    }
-                                }]
-                            }
-                        },
-                        "layout": {
-                            "icon-image": "newLocationPointer",
-                            "icon-size": 0.08
-                        }
-                    });
-                    map.on('click', layerId, function(e){
-                        component.setState({newPointClicked: true});
-                        let popup = document.getElementById("popupDiv");
+                    // map.addLayer({
+                    //          "id": layerId,
+                    //          "type": "symbol",
+                    //          "source": {
+                    //              "type": "geojson",
+                    //              "data": {
+                    //                  "type": "FeatureCollection",
+                    //                  "features": [{
+                    //                      "type": "Feature",
+                    //                      "properties": {
+                    //                          "name": name,
+                    //                          "rating": rating,
+                    //                          "review": review,
+                    //                          "reviewer": '123456',
+                    //                          "reviewerName": 'random dude',
+                    //                          "icon": "rocket"
+                    //                      },
+                    //                      "geometry": {
+                    //                          "type": "Point",
+                    //                          "coordinates": coordinates
+                    //                      }
+                    //                  }]
+                    //              }
+                    //          },
+                    //          "layout": {
+                    //              "icon-image": "newLocationPointer",
+                    //              "icon-size": 0.08
+                    //          }
+                    //      });
+                    //      map.on('click', layerId, function(e){
+                    //          component.setState({newPointClicked: true});
+                    //          let popup = document.getElementById("popupDiv");
+                    //
+                    //          popup.innerHTML = "Review for: " + e.features[0].properties.name + "<br />" + 'Review: ' + e.features[0].properties.review + "<br />" +
+                    //              "Rating: " + e.features[0].properties.rating;
+                    //
+                    //          popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" align='left'> <div> <p class='reviewernaam'> " + "Own review </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + e.features[0].properties.name + "</h2>" + e.features[0].properties.review + "<br />" + '<span class="' + "stars-container stars-" + e.features[0].properties.rating * 20 + '">★★★★★</span>' + "<br />" +
+                    //              '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
+                    //
+                    //          popup.style.display = "block";
+                    //          console.log(map.getLayer(e));
+                    //
+                    //          component.setState({newPointClicked: false});
+                    //      })
 
-                        popup.innerHTML = "Review for: " + e.features[0].properties.name + "<br />" + 'Review: ' + e.features[0].properties.review + "<br />" +
-                            "Rating: " + e.features[0].properties.rating;
+                    popup.remove();
 
-                        popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" align='left'> <div> <p class='reviewernaam'> " + "Own review </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + e.features[0].properties.name + "</h2>" + e.features[0].properties.review + "<br />" + '<span class="' + "stars-container stars-" + e.features[0].properties.rating * 20 + '">★★★★★</span>' + "<br />" +
-                            '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
-
-                        popup.style.display = "block";
-                        console.log(map.getLayer(e));
-
-                        component.setState({newPointClicked: false});
-                    })
-
-                    popup.remove()};
+                    // axios({
+                    //     method: 'post',
+                    //     url: '/api/reviews/user/',
+                    //     data: {'userId': component.state.userIdState}
+                    // }).then(function (response) {
+                    //     map.getSource('ownLocations').setData(JSON.parse(response.data));
+                    //     popup.style.display = "none";
+                    //
+                    //     console.log("updated own data: " + response.data);
+                    // });
+                }
             }
         });
 
