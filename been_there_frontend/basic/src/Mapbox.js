@@ -153,13 +153,9 @@ export default class Mapbox extends React.Component {
             map.flyTo({center: e.features[0].geometry.coordinates});
 
             let popup = document.getElementById("popupDiv");
-            let name = e.features[0].properties.name;
             let title = e.features[0].properties.title;
-            let user = e.features[0].properties.user;
             let userName = e.features[0].properties.username;
             let text = e.features[0].properties.text;
-            let review = e.features[0].properties.review;
-            let reviewerName = e.features[0].properties.reviewerName;
             let rating = e.features[0].properties.rating;
 
             component.setState({popupOpened: true});
@@ -232,6 +228,12 @@ export default class Mapbox extends React.Component {
                     '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
             }
 
+            if (document.getElementById("popupCloseButton") !== null) {
+                document.getElementById("popupCloseButton").addEventListener("click", function (e) {
+                    popup.style.display = "none";
+                });
+            }
+
             if (document.getElementById('removeButton') != null) {
                 document.getElementById('removeButton').onclick = function saveClicked(e) {
                     axios({
@@ -285,7 +287,7 @@ export default class Mapbox extends React.Component {
 
                     if (document.getElementById('saveButton') != null) {
                         document.getElementById('saveButton').onclick = function saveClicked(e) {
-                            var name, rating, review, lng, lat;
+                            var name, rating, review;
 
                             if (document.getElementById('Name')) {
                                 name = document.getElementById('Name').value;
@@ -296,16 +298,8 @@ export default class Mapbox extends React.Component {
                             if (document.getElementById('Rating')) {
                                 rating = document.getElementById('Rating').value;
                             }
-                            if (document.getElementById('lng')) {
-                                lng = document.getElementById('lng').value;
-                            }
-                            if (document.getElementById('lat')) {
-                                lat = document.getElementById('lat').value;
-                            }
 
-                            var layerId = "newPoint" + component.state.index++;
-
-                            if (name != "" && review != "" && rating != "") {
+                            if (name !== "" && review !== "" && rating !== "") {
 
                                 axios({
                                     method: 'post',
@@ -419,7 +413,7 @@ export default class Mapbox extends React.Component {
                     var coordinates = [];
                     coordinates.push(lng, lat);
 
-                    if (name != "" && review != "" && rating != ""){
+                    if (name !== "" && review !== "" && rating !== ""){
                         axios({
                             method: 'post',
                             url: '/api/reviews/add/',
