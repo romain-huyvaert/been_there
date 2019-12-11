@@ -1,3 +1,30 @@
+.navbar-light .navbar-brand {
+    color: white !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: white;
+}
+
+.navbar-light .navbar-toggler{
+    color: white !important;
+}
+.navbar-light.bg-light{
+    background-color: #6b44cc !important;
+}
+
+.navbar-light .navbar-nav .show>.nav-link, .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+    color: white;
+}
+
+.navbar {
+    background-color: #6b44cc !important;
+}
+.bg-light {
+    background-color: #6b44cc !important;
+    color: white;
+}
+
 .App {
     text-align: center;
 }
@@ -7,7 +34,7 @@
 }
 
 .App-header {
-    background-color: #282c34;
+    background-color: #bf0cff !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -32,21 +59,29 @@ h2 {
     color: white;
 }
 
-.navbar-light .navbar-brand {
-    color: white;
+#loginDiv{
+    /*background-color: #6b44cc !important;*/
+    margin-top: 100px;
+    text-align: center;
 }
 
-.navbar-light .navbar-nav .nav-link {
+#loginHeader{
+    font-size: 40px;
     color: white;
 }
-
-.navbar-light .navbar-nav .show>.nav-link, .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
-    color: white;
+.myImage {
+    width: 270px;
+    height: 270px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;    background-image: url("./logo512x512.png");
+    background-repeat: no-repeat;
+    margin-top: 25px;
+    background-size: 100%;
 }
 
-.bg-light {
+body{
     background-color: #6b44cc !important;
-    color: white;
 }
 
 #popupDiv{
