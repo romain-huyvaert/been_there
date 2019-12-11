@@ -28,7 +28,8 @@ export default class Mapbox extends React.Component {
             popupLocation: 0,
             userIdState: this.props.user,
             jsonData: {},
-            clickedCoordinates: []
+            clickedCoordinates: [],
+            scrollDown: false
         };
     }
 
@@ -362,9 +363,11 @@ export default class Mapbox extends React.Component {
 
                     popup.setLngLat(e.lngLat)
                         .setHTML(
-                            "<div class='form-group'><h10>Add a new review</h10> <hr/>" +
+                            "<div id='popupOpenedDiv' class='form-group'><h10>Add a new review</h10> <hr/>" +
                             "<input type='text' id= 'Name' name='Name' placeholder='Title' class='form-control' required><br>\n" +
-                            "<textarea id= 'Review' name='Review' name='textarea' rows='4' class='form-control' placeholder='Review' required></textarea><hr/>" +
+                            "<textarea id='Review' name='Review' name='textarea' rows='3' class='form-control' placeholder='Review' required></textarea>" +
+                            "<br /><button class='btn btn-outline-secondary' onClick=document.getElementById('Rating').scrollIntoView()>↓</button><br />" +
+                            "<hr/>" +
                             "<label>Rating(0-5)</label>" +
                             "<select class='form-control' id='Rating'>" +
                             "<option>0</option>\n" +
@@ -379,6 +382,9 @@ export default class Mapbox extends React.Component {
                             "<input type='hidden' id= 'lat' name='lat' value=" + e.lngLat.lat + " class='btn'></div>"
                         )
                         .addTo(map);
+                    if (document.getElementById('popupOpenedDiv')){
+                        document.getElementById('popupOpenedDiv').scrollIntoView()
+                    }
                 }
             }
             if (document.getElementById("Name")){
