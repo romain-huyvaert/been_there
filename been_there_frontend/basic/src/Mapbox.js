@@ -264,7 +264,8 @@ export default class Mapbox extends React.Component {
                         .setHTML(
                             "<div class='form-group'><h10>Edit review</h10> <hr/>" +
                             "<input type='text' id='Name' name='Name' value="+title+" placeholder=" + title + " class='form-control' required><br>\n" +
-                            "<textarea id= 'Review' name='Review' name='textarea' rows='4' class='form-control' placeholder=" + text + " required>"+text+"</textarea><hr/>" +
+                            "<textarea id= 'Review' name='Review' name='textarea' rows='3' class='form-control' placeholder=" + text + " required>"+text+"</textarea>" +
+                            "<br /><button class='btn btn-outline-secondary' onClick=document.getElementById('Rating').scrollIntoView()>↓</button><hr /><br />" +
                             "<label>Rating(0-5)</label>" +
                             "<select value=4 class='form-control' id='Rating'>" +
                             "<option>0</option>\n" +
