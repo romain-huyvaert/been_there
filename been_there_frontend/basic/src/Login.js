@@ -44,7 +44,7 @@ export default class Login extends React.Component {
 
                     <div className="myImage"> </div>
 
-                    <div className="col-sm-10 form-group-lg" id='loginDiv'>
+                    <div id='loginDiv'>
 
                     <div id='loginHeader'>Select user</div><br />
                         <select id='userIdInput' className="form-control form-control-lg">
