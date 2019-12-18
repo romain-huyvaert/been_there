@@ -1,12 +1,13 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
-import Data from './data.geojson';
+// import Data from './data.geojson';
+// import Data2 from './data2.geojson';
+// import Data3 from './data3.geojson';
 import './App.css';
 import myImage from './192x192_versie_1.png';
+import pinpointSelf from './pinpoint_self.png';
 import axios from 'axios'
 
-// "homepage": "https://alexpost95.github.io/C-CTest/",
 
 var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
@@ -25,13 +26,16 @@ export default class Mapbox extends React.Component {
             newPointClicked: false,
             index: 0,
             addNewPinpoint: false,
-            popupLocation: 0
+            popupLocation: 0,
+            userIdState: this.props.user,
+            jsonData: {}
         };
     }
 
     componentDidMount() {
         const { lng, lat, zoom } = this.state;
-        var component = this;
+        let component = this;
+        component.setState({userIdState: component.props.user});
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
@@ -40,9 +44,11 @@ export default class Mapbox extends React.Component {
             zoom
         });
 
-        document.getElementById('addPinpoint').addEventListener("click", function (e) {
-            component.setState({addNewPinpoint: !component.state.addNewPinpoint});
-        });
+        if (document.getElementById('addPinpoint')){
+            document.getElementById('addPinpoint').addEventListener("click", function (e) {
+                component.setState({addNewPinpoint: !component.state.addNewPinpoint});
+            });
+        }
 
         map.on('move', () => {
             const { lng, lat } = map.getCenter();
@@ -58,26 +64,35 @@ export default class Mapbox extends React.Component {
             map.loadImage('https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png', function(error, image){
                 map.addImage('newLocationPointer', image);
             });
+            map.loadImage(pinpointSelf, function(error, image){
+                map.addImage('ownLocationPointer', image);
+            });
+
+            axios({
+                method: 'post',
+                url: '/api/reviews/friends/',
+                data: {'userId': component.state.userIdState}
+            }).then(function (response) {
+                map.addSource('friends', {type: 'geojson', data: JSON.parse(response.data)});
+                console.log("Friends layer: " + response.data);
+            })
 
             map.loadImage(myImage, function(error, image) {
                 if (error) throw error;
                 map.addImage('pointer', image);
 
-                let response = axios({
-                    method: 'get',
-                    url: '/api/reviews/',
-                    data: {}
+                axios({
+                    method: 'post',
+                    url: '/api/reviews/friends/',
+                    data: {'userId': component.state.userIdState}
                 }).then(function(response) {
                     map.addLayer({
-                        id: 'beenThereLocations',
+                        id: 'beenThereFriendsLocations',
                         type: 'symbol',
-                        source: {
-                            type: 'geojson',
-                            data: Data,
-                            cluster: true,
-                            clusterMaxZoom: 20,
-                            clusterRadius: 5
-                        },
+                        source: 'friends',
+                        cluster: true,
+                        clusterMaxZoom: 20,
+                        clusterRadius: 5,
                         "layout": {
                             "icon-image": "pointer",
                             "icon-size": 0.3,
@@ -86,7 +101,44 @@ export default class Mapbox extends React.Component {
                     });
                 });
             });
+
+
+            axios({
+                method: 'post',
+                url: '/api/reviews/user/',
+                data: {'userId': component.state.userIdState}
+            }).then(function (response) {
+                map.addSource('ownLocations', {type: 'geojson', data: JSON.parse(response.data)});
+                console.log("ownLocations layer: " + response.data);
+            })
+
+            map.loadImage(myImage, function(error, image) {
+                if (error) throw error;
+
+                axios({
+                    method: 'post',
+                    url: '/api/reviews/user/',
+                    data: {'userId': component.state.userIdState}
+                }).then(function(response) {
+                    map.addLayer({
+                        id: 'beenThereOwnLocations',
+                        type: 'symbol',
+                        source: 'ownLocations',
+                        cluster: true,
+                        clusterMaxZoom: 20,
+                        clusterRadius: 5,
+                        "layout": {
+                            "icon-image": "ownLocationPointer",
+                            "icon-size": 0.05,
+                            "icon-allow-overlap": true
+                        }
+                    });
+                });
+            });
         });
+
+        console.log("User props: " + component.props.user);
+        console.log("User state: " + component.state.userIdState);
 
         map.on('click', () => {
             let popup = document.getElementById("popupDiv")
@@ -95,23 +147,48 @@ export default class Mapbox extends React.Component {
             component.setState({popupOpened: false});
         });
 
-        map.on('click', 'beenThereLocations', (e) => {
+        map.on('click', 'beenThereFriendsLocations', (e) => {
             console.log(e);
             component.setState({pointClicked: true});
             map.flyTo({center: e.features[0].geometry.coordinates});
-            let popup = document.getElementById("popupDiv");
 
-            let coordinates = e.features[0].geometry.coordinates.slice();
+            // axios({
+            //     method: 'post',
+            //     url: '/api/reviews/friends/',
+            //     data: {'user_id': component.state.userIdState}
+            // }).then(function (response) {
+            //     map.getSource('friends').setData(JSON.parse(response.data));
+            //     console.log("updated friends data: " + response.data);
+            // });
+            let popup = document.getElementById("popupDiv");
             let name = e.features[0].properties.name;
+            let title = e.features[0].properties.title;
+            let user = e.features[0].properties.user;
+            let userName = e.features[0].properties.username;
+            let text = e.features[0].properties.text;
             let review = e.features[0].properties.review;
             let reviewerName = e.features[0].properties.reviewerName;
             let rating = e.features[0].properties.rating;
 
+            component.setState({popupOpened: true});
+
+            if (title !== undefined){
+                console.log("clicked title: " + title);
+                component.setState({popupOpened: true});
+                console.log("own point clicked");
+
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + userName + "  align='left'> <div> <p class='reviewernaam'> " + userName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
+                    '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
+
+                // popup.style.display = "block";
+
+            }
             if (name !== undefined){
                 component.setState({popupOpened: true});
                 popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + reviewerName + "  align='left'> <div> <p class='reviewernaam'> " + reviewerName + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + name + "</h2>" + review + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span> ' +
                     '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
             }
+
             if (e.features[0].properties.first !== undefined && e.features[0].properties.second !== undefined && e.features[0].properties.third === undefined){
                 component.setState({popupOpened: true});
                 let firstObject = JSON.parse(e.features[0].properties.first);
@@ -144,13 +221,98 @@ export default class Mapbox extends React.Component {
 
             popup.style.display = "block";
 
-            if (e.features[0].properties.name === undefined && e.features[0].properties.second === undefined && e.features[0].properties.third === undefined){
+            // if (e.features[0].properties.name === undefined && e.features[0].properties.second === undefined && e.features[0].properties.third === undefined){
+            //     // popup.innerHTML = 'Cluster clicked';
+            //     // popup.style.display = "none";
+            //
+            //     console.log(e.lngLat);
+            //     map.zoomIn(2);
+            //     var zoom = map.getZoom();
+            //     map.flyTo({center: e.lngLat, zoom: 10});
+            // }
+
+            if (e.features[0].properties.title === undefined){
                 // popup.innerHTML = 'Cluster clicked';
                 popup.style.display = "none";
 
                 console.log(e.lngLat);
                 map.zoomIn(2);
-                var zoom = map.getZoom();
+                map.flyTo({center: e.lngLat, zoom: 10});
+            }
+        });
+
+        map.on('click', 'beenThereOwnLocations', (e) => {
+            console.log(e);
+            component.setState({pointClicked: true});
+            map.flyTo({center: e.features[0].geometry.coordinates});
+
+            let popup = document.getElementById("popupDiv");
+            let title = e.features[0].properties.title;
+            let user = e.features[0].properties.user;
+            let text = e.features[0].properties.text;
+            let rating = e.features[0].properties.rating;
+            let rewiewId = e.features[0].properties.pk;
+
+            console.log("reviewId: " + rewiewId);
+
+            component.setState({popupOpened: true});
+
+            if (title !== undefined){
+                console.log("clicked title: " + title);
+                component.setState({popupOpened: true});
+                popup.style.display = "block";
+
+                popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" alt=" + user + "  align='left'> <div> <p class='reviewernaam'> " + "Own review" + user + " </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + title + "</h2>" + text + "<br />" + '<span class="' + "stars-container stars-" + rating * 20 + '">★★★★★</span>' + "<br /><button class='btn btn-primary' style='border-radius: 5px' id='removeButton' type='button'>Remove</button>" +
+                    '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
+            }
+
+            if (document.getElementById('removeButton') != null) {
+                document.getElementById('removeButton').onclick = function saveClicked(e) {
+                    axios({
+                        method: 'post',
+                        url: '/api/reviews/delete/',
+                        data: {'userId': component.state.userIdState, 'reviewId': rewiewId}
+                    }).then(function (response) {
+                        // map.getSource('ownLocations').setData(JSON.parse(response.data));
+                        console.log("Deleted review with id: " + rewiewId + ", " + response);
+                        axios({
+                            method: 'post',
+                            url: '/api/reviews/user/',
+                            data: {'userId': component.state.userIdState}
+                        }).then(function (response) {
+                            map.getSource('ownLocations').setData(JSON.parse(response.data));
+                            popup.style.display = "none";
+
+                            console.log("updated own data: " + response.data);
+                        });
+                    });
+
+                    // axios({
+                    //     method: 'post',
+                    //     url: '/api/reviews/user/',
+                    //     data: {'user_id': component.state.userIdState}
+                    // }).then(function (response) {
+                    //     map.getSource('ownLocations').setData(JSON.parse(response.data));
+                    //     console.log("updated friends data: " + response.data);
+                    // });
+                }
+            }
+            if (document.getElementById("popupCloseButton") !== null) {
+                document.getElementById("popupCloseButton").addEventListener("click", function (e) {
+                    popup.style.display = "none";
+                });
+            }
+
+            e.preventDefault();
+
+            popup.style.display = "block";
+
+            if (e.features[0].properties.title === undefined){
+                // popup.innerHTML = 'Cluster clicked';
+                popup.style.display = "none";
+
+                console.log(e.lngLat);
+                map.zoomIn(2);
                 map.flyTo({center: e.lngLat, zoom: 10});
             }
         });
@@ -160,18 +322,10 @@ export default class Mapbox extends React.Component {
             // closeOnClick: false
         });
 
-        map.on('mouseenter', 'beenThereLocations', () => {
-            map.getCanvas().style.cursor = 'pointer';
-        });
-
-        map.on('mouseleave', 'beenThereLocations', () => {
-            map.getCanvas().style.cursor = '';
-        });
-
         map.on('click', function(e) {
             if (!component.state.pointClicked && !component.state.popupOpened && !component.state.newPointClicked){
 
-                if (component.state.addNewPinpoint == true){
+                if (component.state.addNewPinpoint === true){
                     map.flyTo({center: e.lngLat});
                     var coordinates = [];
                     coordinates.push(e.lngLat.lng);
@@ -200,48 +354,52 @@ export default class Mapbox extends React.Component {
                         .addTo(map);
                 }
             }
-            document.getElementById("Name").addEventListener('click', function (e) {
-                // document.getElementById("Name").blur();
-                // document.getElementById("Name").disabled = 'false';
-                e.preventDefault();
-            })
+            if (document.getElementById("Name")){
+                document.getElementById("Name").addEventListener('click', function (e) {
+                    // document.getElementById("Name").blur();
+                    // document.getElementById("Name").disabled = 'false';
+                    e.preventDefault();
+                })
+            }
+
             if (document.getElementById('closeButton') != null){
                 document.getElementById('closeButton').onclick = function cancelClicked(){popup.remove()};
             }if (document.getElementById('saveButton') != null){
                 document.getElementById('saveButton').onclick = function saveClicked(e){
-                    var name = document.getElementById('Name').value;
-                    var review = document.getElementById('Review').value;
-                    var rating = document.getElementById('Rating').value;
-                    var lng = document.getElementById('lng').value;
-                    var lat = document.getElementById('lat').value;
+                    var name, rating, review, lng, lat;
+
+                    if (document.getElementById('Name')){
+                        name = document.getElementById('Name').value;
+                    }
+                    if (document.getElementById('Review')){
+                        review = document.getElementById('Review').value;
+                    }
+                    if (document.getElementById('Rating')){
+                        rating = document.getElementById('Rating').value;
+                    }
+                    if (document.getElementById('lng')){
+                        lng = document.getElementById('lng').value;
+                    }
+                    if (document.getElementById('lat')){
+                        lat = document.getElementById('lat').value;
+                    }
                     var coordinates = [];
                     coordinates.push(lng, lat);
                     var layerId = "newPoint"+component.state.index++;
 
                     axios({
                         method: 'post',
-                        url: '/api/pinpoints/add/',
+                        url: '/api/reviews/add/',
                         data: {
+                            name: name,
+                            review: review,
+                            rating: rating,
                             point: coordinates,
+                            userId: component.state.userIdState
                         }
-                    }).then(function () {
-                        axios({
-                            method: 'post',
-                            url: '/api/reviews/add/',
-                            data: {
-                                name: name,
-                                review: review,
-                                rating: rating,
-                                point: coordinates,
-                            }
-                        });
                     });
 
-
-
-
-
-                    map.addLayer({
+               map.addLayer({
                         "id": layerId,
                         "type": "symbol",
                         "source": {
@@ -273,8 +431,13 @@ export default class Mapbox extends React.Component {
                     map.on('click', layerId, function(e){
                         component.setState({newPointClicked: true});
                         let popup = document.getElementById("popupDiv");
+
                         popup.innerHTML = "Review for: " + e.features[0].properties.name + "<br />" + 'Review: ' + e.features[0].properties.review + "<br />" +
                             "Rating: " + e.features[0].properties.rating;
+
+                        popup.innerHTML = "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fadmissions.colostate.edu%2Fmedia%2Fsites%2F19%2F2014%2F07%2Ficon_silhouette-01-1024x1024.png&f=1&nofb=1\" align='left'> <div> <p class='reviewernaam'> " + "Own review </p> </div>      <div class='reviewtekst' align='left'> <h2 class='bold'>" + e.features[0].properties.name + "</h2>" + e.features[0].properties.review + "<br />" + '<span class="' + "stars-container stars-" + e.features[0].properties.rating * 20 + '">★★★★★</span>' + "<br />" +
+                            '<button id="popupCloseButton" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>';
+
                         popup.style.display = "block";
                         console.log(map.getLayer(e));
 
@@ -309,13 +472,10 @@ export default class Mapbox extends React.Component {
 
         map.addControl(geoControl, 'top-right');
 
-        // https://github.com/mapbox/mapbox-gl-draw#usage-in-your-application
-        // var Draw = new MapboxDraw();
-        // map.addControl(Draw, 'top-right');
     }
 
     render() {
-        const { lng, lat, zoom } = this.state;
+        // const { lng, lat, zoom } = this.state;
 
         return (
             <div>

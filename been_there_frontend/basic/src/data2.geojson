@@ -1,241 +1,315 @@
 {
    "type":"FeatureCollection",
+   "crs":{
+      "type":"name",
+      "properties":{
+         "name":"EPSG:4326"
+      }
+   },
    "features":[
       {
          "type":"Feature",
          "properties":{
-            "name":"London Eye",
-            "rating":"4",
-            "review":"Great way to get an overview of London and the Themes. Costs about 10 pounds but totally worth it.",
-            "reviewer":"254862",
-            "reviewerName":"Alex"
+            "title":"Grand Caf\u00e9 Public",
+            "rating":4,
+            "text":"Nice caf\u00e9, juste in front of the museum",
+            "date":"2019-12-03",
+            "time":"12:39:55.033",
+            "user":1
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               -0.1589423418045044,
-               51.497202145853784
+               52.510508,
+               6.091522
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Tower Bridge",
-            "rating":"5",
-            "review":"Beautiful old bridge, a real London landmark. Can't be missed when you visit London.",
-            "reviewer":"254862",
-            "reviewerName":"Rob"
+            "title":"Sally O Briens",
+            "rating":5,
+            "text":"Good Irish Pub, really enjoyed it",
+            "date":"2019-12-03",
+            "time":"14:00:08.550",
+            "user":3
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               -0.15822887420654297,
-               51.49493113833391
+               52.510795,
+               6.094455
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Big Ben",
-            "rating":"1",
-            "review":"A big tower, that's about it. Nice to look at for 5 seconds if you are too lazy to look up the time yourself.",
-            "reviewer":"254862",
-            "reviewerName":"Samantha"
+            "title":"fasdfas",
+            "rating":0,
+            "text":"asdf",
+            "date":"2019-12-04",
+            "time":"13:38:09",
+            "user":1
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               -0.1631641387939453,
-               51.49570596538067
+               6.167449951171506,
+               52.88984903106524
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Harrods",
-            "rating":"5",
-            "review":"Awesome store. Bought a private plane and a pet tiger. ",
-            "reviewer":"254862",
-            "reviewerName":"Daan"
+            "title":"fasdfas",
+            "rating":0,
+            "text":"asdf",
+            "date":"2019-12-04",
+            "time":"13:42:15",
+            "user":1
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               -0.1556539535522461,
-               51.49629375642361
+               6.167449951171506,
+               52.88984903106524
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Royal Albert Hall",
-            "rating":"5",
-            "review":"Beautiful venue. Went to a rock concert and it was amazing. Great accoustics.",
-            "reviewer":"254862",
-            "reviewerName":"Jason"
+            "title":"testasdfasdf",
+            "rating":5,
+            "text":"asdfasdfadsf",
+            "date":"2019-12-04",
+            "time":"13:42:57",
+            "user":1
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               -0.14299392700195312,
-               51.489720752362466
+               5.486297607421704,
+               51.863771974569346
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Tottenham stadium",
-            "rating":"4",
-            "review":"Went to the Bears NFL game at the Tottenham stadium. It's a great venue for NFL games. ",
-            "reviewer":"254862",
-            "reviewerName":"Daniel"
+            "title":"user 3a",
+            "rating":0,
+            "text":"dsf",
+            "date":"2019-12-04",
+            "time":"13:47:20",
+            "user":3
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               -0.17526626586914062,
-               51.48907943293123
+               6.535491943359006,
+               52.74377457035226
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Harry Potter tour",
-            "rating":"1",
-            "review":"Not a recommendation. Didn't even see Harry or Hagrid. Total waste of time and money",
-            "reviewer":"254862",
-            "reviewerName":"Ron"
+            "title":"User 4 test",
+            "rating":2,
+            "text":"adsf",
+            "date":"2019-12-04",
+            "time":"13:50:47",
+            "user":4
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               -0.182647705078125,
-               51.501369818211096
+               5.261077880859347,
+               51.53010569212549
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"City bus",
-            "rating":"5",
-            "review":"City busses are a great way to get a quick overview of the city and get to your destination quickly while sightseeing. Only cost 2 pounds, totally worth it.",
-            "reviewer":"254862",
-            "reviewerName":"Hayley"
+            "title":"Test friends 1",
+            "rating":4,
+            "text":"qsmldkfjq",
+            "date":"2019-12-05",
+            "time":"09:22:01.150",
+            "user":2
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               -0.14024734497070312,
-               51.51237491545877
+               -1.0,
+               1.0
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"New year's eve fireworks",
-            "rating":"5",
-            "review":"Beautiful fireworks show on new year's eve. Great music, although it was really crowded. Perfect to visit London around the holidays",
-            "reviewer":"254862",
-            "reviewerName":"Taylor"
+            "title":"Test friends 2",
+            "rating":1,
+            "text":"qsmldkfjq fdsqljk",
+            "date":"2019-12-05",
+            "time":"09:22:41.062",
+            "user":5
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               -0.13355255126953125,
-               51.4965609316647
+               1.0,
+               -1.0
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Grote Michaëlskerk",
-            "rating":"3",
-            "review":"Erg mooie kerk en ligt in het centrum van Zwolle. Ik ben hier op zondag ochtend geweest en toen was er een hele mooie dienst. Zeker een aanrader om een keer langs te gaan, vooral op zondag natuurlijk",
-            "reviewer":"254862",
-            "reviewerName":"Henk"
+            "title":"Emmeloord sucks",
+            "rating":1,
+            "text":"asdfasdf",
+            "date":"2019-12-05",
+            "time":"10:12:46",
+            "user":1
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               6.092187166213989,
-               52.51186261268274
+               5.7389831542975,
+               52.71383520358981
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Park",
-            "rating":"1",
-            "review":"Het is een groot park maar daar is ook alles mee gezegd. Er ligt veel afval en er liggen overal hondendrollen, dus picknicken zou ik hier zeker niet doen",
-            "reviewer":"254862",
-            "reviewerName":"Kees"
+            "title":"qwerqwef",
+            "rating":3,
+            "text":"asdfasdf",
+            "date":"2019-12-05",
+            "time":"10:14:40",
+            "user":1
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               6.088442802429199,
-               52.50932581351016
+               5.28854370117125,
+               51.618869218965585
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Restaurant vliegend paard",
-            "rating":"5",
-            "review":"Erg leuke en gezellige studenten cafe. Veel soorten bieren en je kan hier heel goedkoop eten. ",
-            "reviewer":"254862",
-            "reviewerName":"Jasper"
+            "title":"werw",
+            "rating":5,
+            "text":"adsfasd",
+            "date":"2019-12-05",
+            "time":"10:15:34",
+            "user":1
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               6.090824604034424,
-               52.512443737824114
+               6.562957763672472,
+               51.93833874494649
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Wezenlanden park",
-            "rating":"4",
-            "review":"Erg groot en mooi park. Hier zijn altijd mensen aan het sporten en aan het genieten van het mooie weer. Als je even wilt ontspannen kan je hier goed terecht. ",
-            "reviewer":"254862",
-            "reviewerName":"Marloes"
+            "title":"test with id 5 by Daan",
+            "rating":4,
+            "text":"adsfasd",
+            "date":"2019-12-05",
+            "time":"10:19:00",
+            "user":5
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               6.108623743057251,
-               52.50776513586277
+               6.61788940429625,
+               52.630562396851985
             ]
          }
       },
       {
          "type":"Feature",
          "properties":{
-            "name":"Hotel Van Der Valk",
-            "rating":"3",
-            "review":"Very nice hotel to stay the night. It is very new and therefore it looks great and feels very clean. I recommend it if you need to stay near Zwolle.",
-            "reviewer":"254862",
-            "reviewerName":"John"
+            "title":"Woohooo",
+            "rating":5,
+            "text":"asdfasdf",
+            "date":"2019-12-05",
+            "time":"10:20:24",
+            "user":3
          },
          "geometry":{
             "type":"Point",
             "coordinates":[
-               6.158416271209717,
-               52.53300343801513
+               5.58517456054696,
+               51.96542325321775
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "title":"asdf",
+            "rating":3,
+            "text":"asdf",
+            "date":"2019-12-05",
+            "time":"10:22:34",
+            "user":1
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.31258964538614,
+               52.76011299665046
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "title":"D.l",
+            "rating":0,
+            "text":"D.l",
+            "date":"2019-12-05",
+            "time":"10:23:05",
+            "user":2
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               6.060333251954802,
+               52.428384918168206
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "properties":{
+            "title":"Fot",
+            "rating":2,
+            "text":"Fluff",
+            "date":"2019-12-05",
+            "time":"10:25:59",
+            "user":2
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               5.604400634767615,
+               52.435083351059916
             ]
          }
       }
