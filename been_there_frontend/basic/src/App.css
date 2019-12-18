@@ -63,6 +63,11 @@ h2 {
     /*background-color: #6b44cc !important;*/
     margin-top: 100px;
     text-align: center;
+    display: block;
+    left: auto;
+    right: auto;
+    margin-right: 10%;
+    margin-left: 10%;
 }
 
 #loginHeader{

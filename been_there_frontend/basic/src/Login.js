@@ -25,9 +25,9 @@ export default class Login extends React.Component {
             url: '/api/users/',
             data: {}
         }).then(function (response) {
-            console.log(response.data);
+            // console.log(response.data);
             component.setState({users: response.data});
-            console.log("users: " + component.state.users.toString());
+            // console.log("users: " + component.state.users.toString());
         });
     }
 
@@ -44,7 +44,7 @@ export default class Login extends React.Component {
 
                     <div className="myImage"> </div>
 
-                    <div className="col-sm-10 form-group-lg" id='loginDiv'>
+                    <div id='loginDiv'>
 
                     <div id='loginHeader'>Select user</div><br />
                         <select id='userIdInput' className="form-control form-control-lg">
