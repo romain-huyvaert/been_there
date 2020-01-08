@@ -60,7 +60,6 @@ h2 {
 }
 
 #loginDiv{
-    /*background-color: #6b44cc !important;*/
     margin-top: 100px;
     text-align: center;
     display: block;
@@ -95,12 +94,7 @@ body{
     display: none;
     position: absolute;
     background-color: #F8F8FF;
-    /*left: 20vw;/*
-    /*right: 20vw;*/
-    /*width: 98%;*/
     width: 100%;
-    /*left: 1%;*/
-    /*right: 1%;*/
     bottom: 0;
     margin: auto;
     border-top: 3px solid #ffcf4b;
@@ -121,18 +115,8 @@ body{
 }
 
 .mapboxgl-ctrl-top-left {
-    /*margin-left: 40vw;/*/
     margin-top: 50px;
 }
-
-/*.marker {
-    background-image: url('icons8-tesla-supercharger-pin-50.png');
-    background-size: cover;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-}*/
 
 .geocoder-dropdown-item{
     padding: 5px
@@ -175,7 +159,6 @@ img {
     height: auto;
 }
 
-
 .stars-container {
     position: relative;
     display: inline-block;
@@ -212,12 +195,6 @@ img {
 .stars-90:after { width: 90%; }
 .stars-100:after { width: 100%;}
 
-/*@media only screen and (max-width: 480px) {*/
-/*    .mapboxgl-popup-content {*/
-/*        max-height: 100px;*/
-/*    }*/
-/*}*/
-
 @media all and (max-width: 768px){
     .mapboxgl-popup-content{
         height: 275px;
@@ -225,19 +202,12 @@ img {
     }
 }
 
-/*.mapboxgl-popup{*/
-/*    transform:none !important;*/
-/*    top: 100px;*/
-/*    !*left: 10px;*!*/
-/*}*/
-
 .mapboxgl-popup-content {
     background: #e8e8e8;
     border:2px solid black;
     border-radius: 10px;
     text-align: center;
     overflow: auto;
-    /*resize: both;*/
 }
 
 h10{
@@ -253,8 +223,6 @@ h10{
     font-size: 30px;
 }
 
-
-
 #addPinpoint {
     position: absolute;
     z-index: 100;
@@ -264,7 +232,6 @@ h10{
     border-radius: 5px;
     border-color: #dad5ce;
     border-width: 1.3px;
-    /*font-size: 10px;*/
     padding: 2.8px 8.3px 2.8px 8.3px;
     top: 100px;
 }
@@ -272,4 +239,3 @@ h10{
 #addPinpoint.active{
     color: #39b7e6;
 }
-

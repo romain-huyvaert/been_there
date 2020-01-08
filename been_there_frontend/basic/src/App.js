@@ -1,7 +1,6 @@
 import React from 'react'
 import Login from './Login';
 
-
 export default class Application extends React.Component {
 
     render() {
@@ -9,11 +8,11 @@ export default class Application extends React.Component {
         return (
             <div id='App'>
 
-               <Login style={{
-                   display: 'flex',
-                   alignItems: 'center',
-                   justifyContent: 'center',
-               }}/>
+                <Login style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}/>
 
             </div>
         );
