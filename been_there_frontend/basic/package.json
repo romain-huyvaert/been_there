@@ -2,7 +2,7 @@
   "name": "basic",
   "version": "0.0.0",
   "private": true,
-  "proxy": "http://35.180.211.57",
+  "proxy": "http://35.180.67.254",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

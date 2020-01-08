@@ -15,19 +15,7 @@ export class Header extends Component {
                         <li className="nav-item active">
                             <a className="nav-link" href="https://alhooimeijer.wixsite.com/beenthere" target="_blank" rel="noopener noreferrer">About</a>
                         </li>
-                        {/*<li className="nav-item active">*/}
-                        {/*    <a className="nav-link" href="#">Account</a>*/}
-                        {/*</li>*/}
-                        {/*<li className="nav-item">*/}
-                        {/*    <a className="nav-link" href="#">Settings</a>*/}
-                        {/*</li>*/}
-                        {/*<li className="nav-item">*/}
-                        {/*    <a className="nav-link" href="#">Log out</a>*/}
-                        {/*</li>*/}
                     </ul>
-                    {/*<span className="navbar-text">*/}
-                    {/*  Navbar text with an inline elements*/}
-                    {/*</span>*/}
                 </div>
             </nav>
             </div>
