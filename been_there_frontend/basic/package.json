@@ -18,7 +18,7 @@
     "mapbox": "^1.0.0-beta10",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-scripts": "^1.0.10"
+    "react-scripts": "^5.0.1"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-draw": "^1.1.2",
